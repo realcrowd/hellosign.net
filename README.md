@@ -1,7 +1,7 @@
 # HelloSign.Net - HelloSign API Client Library for .NET
 
 HelloSign.Net is a client library targeting .NET 4.5 and above that provides an easy
-way to interact with the [HelloSign API](http://www.hellosign.com/api/).
+way to interact with the [HelloSign API](http://www.hellosign.com/api/gettingStarted).
 
 ## Usage examples
 
