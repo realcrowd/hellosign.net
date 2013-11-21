@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("RealCrowd.HelloSign")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("RealCrowd, Inc.")]
 [assembly: AssemblyProduct("RealCrowd.HelloSign")]
 [assembly: AssemblyCopyright("Copyright © RealCrowd, Inc. 2013")]
 [assembly: AssemblyTrademark("")]
