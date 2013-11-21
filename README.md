@@ -19,8 +19,6 @@ Console.WriteLine("Your current callback: " + account.CallbackUrl);
 
 ## Getting Started
 
-HelloSign.Net is available on NuGet.
-
 
 ## Build
 
