@@ -14,13 +14,13 @@ namespace RealCrowd.HelloSign.Tests.Integration
         {
             HelloSignClient client = new HelloSignClient(Config.Username, Config.Password);
 
-            Account account = await client.Account.Get();
+            Account account = await client.Account.GetAsync();
             Assert.IsTrue(account.EmailAddress == Config.Username);
 
-            Account accountUpdate = await client.Account.Update(new AccountUpdateRequest { CallbackUrl = "http://test" });
+            Account accountUpdate = await client.Account.UpdateAsync(new AccountUpdateRequest { CallbackUrl = "http://test" });
             Assert.IsTrue(accountUpdate.CallbackUrl == "http://test");
 
-            Account accountUpdateDeleteCallback = await client.Account.Update(new AccountUpdateRequest { CallbackUrl = "" });
+            Account accountUpdateDeleteCallback = await client.Account.UpdateAsync(new AccountUpdateRequest { CallbackUrl = "" });
             Assert.IsTrue(accountUpdateDeleteCallback.CallbackUrl == null);
         }
     }

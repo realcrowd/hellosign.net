@@ -18,68 +18,68 @@ namespace RealCrowd.HelloSign.Clients
             this.helloSignService = helloSignService;
         }
 
-        public async Task<Team> Get()
+        public async Task<Team> GetAsync()
         {
             TeamWrapper wrapper = await helloSignService.MakeRequestAsync<TeamWrapper>(
-                settings.helloSignServiceSettings.Endpoints.Team.Get);
+                settings.HelloSignSettings.Endpoints.Team.Get);
             return wrapper.Team;
         }
 
-        public async Task<Team> Create(string name)
+        public async Task<Team> CreateAsync(string name)
         {
-            return await Create(new TeamCreateRequest { Name = name });
+            return await CreateAsync(new TeamCreateRequest { Name = name });
         }
 
-        public async Task<Team> Create(TeamCreateRequest request)
+        public async Task<Team> CreateAsync(TeamCreateRequest request)
         {
             TeamWrapper wrapper = await helloSignService.MakeRequestAsync<TeamWrapper>(
-                settings.helloSignServiceSettings.Endpoints.Team.Create,
+                settings.HelloSignSettings.Endpoints.Team.Create,
                 request);
             return wrapper.Team;
         }
 
-        public async Task<Team> Update(string name)
+        public async Task<Team> UpdateAsync(string name)
         {
-            return await Update(new TeamUpdateRequest { Name = name });
+            return await UpdateAsync(new TeamUpdateRequest { Name = name });
         }
 
-        public async Task<Team> Update(TeamUpdateRequest request)
+        public async Task<Team> UpdateAsync(TeamUpdateRequest request)
         {
             TeamWrapper wrapper = await helloSignService.MakeRequestAsync<TeamWrapper>(
-                settings.helloSignServiceSettings.Endpoints.Team.Update,
+                settings.HelloSignSettings.Endpoints.Team.Update,
                 request);
             return wrapper.Team;
         }
 
-        public async Task<bool> Destroy()
+        public async Task<bool> DestroyAsync()
         {
             dynamic response = await helloSignService.MakeRequestAsync<dynamic>(
-                settings.helloSignServiceSettings.Endpoints.Team.Destory);
+                settings.HelloSignSettings.Endpoints.Team.Destory);
             return response != null;
         }
 
-        public async Task<Team> AddMember(string accountId, string emailAddress)
+        public async Task<Team> AddMemberAsync(string accountId, string emailAddress)
         {
-            return await AddMember(new TeamAddMemberRequest { AccountId = accountId, EmailAddress = emailAddress });
+            return await AddMemberAsync(new TeamAddMemberRequest { AccountId = accountId, EmailAddress = emailAddress });
         }
 
-        public async Task<Team> AddMember(TeamAddMemberRequest request)
+        public async Task<Team> AddMemberAsync(TeamAddMemberRequest request)
         {
             TeamWrapper wrapper = await helloSignService.MakeRequestAsync<TeamWrapper>(
-                settings.helloSignServiceSettings.Endpoints.Team.AddMember,
+                settings.HelloSignSettings.Endpoints.Team.AddMember,
                 request);
             return wrapper.Team;
         }
 
-        public async Task<Team> RemoveMember(string accountId, string emailAddress)
+        public async Task<Team> RemoveMemberAsync(string accountId, string emailAddress)
         {
-            return await RemoveMember(new TeamRemoveMemberRequest { AccountId = accountId, EmailAddress = emailAddress });
+            return await RemoveMemberAsync(new TeamRemoveMemberRequest { AccountId = accountId, EmailAddress = emailAddress });
         }
 
-        public async Task<Team> RemoveMember(TeamRemoveMemberRequest request)
+        public async Task<Team> RemoveMemberAsync(TeamRemoveMemberRequest request)
         {
             TeamWrapper wrapper = await helloSignService.MakeRequestAsync<TeamWrapper>(
-                settings.helloSignServiceSettings.Endpoints.Team.RemoveMember,
+                settings.HelloSignSettings.Endpoints.Team.RemoveMember,
                 request);
             return wrapper.Team;
         }

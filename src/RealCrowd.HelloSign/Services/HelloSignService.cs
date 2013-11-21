@@ -58,7 +58,7 @@ namespace RealCrowd.HelloSign
 
         private async Task<T> MakeGetRequestAsync<T>(string endpoint, string data)
         {
-            string url = settings.helloSignServiceSettings.BaseUrl + endpoint;
+            string url = settings.HelloSignSettings.BaseUrl + endpoint;
 
             if (!string.IsNullOrEmpty(data))
                 url += "?" + data;
@@ -78,7 +78,7 @@ namespace RealCrowd.HelloSign
 
         private async Task<T> MakePostRequestAsync<T>(string endpoint, string data)
         {
-            string url = settings.helloSignServiceSettings.BaseUrl + endpoint;
+            string url = settings.HelloSignSettings.BaseUrl + endpoint;
             var webReq = (HttpWebRequest)WebRequest.Create(url);
             webReq.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(username + ":" + password));
             webReq.Method = "POST";

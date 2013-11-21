@@ -9,10 +9,10 @@ namespace RealCrowd.HelloSign.Clients
 {
     public interface IAccountService
     {
-        Task<Account> Get();
-        Task<Account> Update(string callbackUrl);
-        Task<Account> Update(AccountUpdateRequest request);
-        Task<Account> Create(string emailAddress, string password);
-        Task<Account> Create(AccountCreateRequest request);
+        Task<Account> GetAsync();
+        Task<Account> UpdateAsync(string callbackUrl);
+        Task<Account> UpdateAsync(AccountUpdateRequest request);
+        Task<Account> CreateAsync(string emailAddress, string password);
+        Task<Account> CreateAsync(AccountCreateRequest request);
     }
 }

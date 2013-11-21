@@ -14,7 +14,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
         {
             HelloSignClient client = new HelloSignClient(Config.Username, Config.Password);
 
-            Team team = await client.Team.Get();
+            Team team = await client.Team.GetAsync();
 
             Assert.IsTrue(!string.IsNullOrEmpty(team.Name));
         }

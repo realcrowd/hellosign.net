@@ -18,34 +18,34 @@ namespace RealCrowd.HelloSign.Clients
             this.helloSignService = helloSignService;
         }
 
-        public async Task<Account> Get()
+        public async Task<Account> GetAsync()
         {
-            AccountWrapper accountWrapper = await helloSignService.MakeRequestAsync<AccountWrapper>(settings.helloSignServiceSettings.Endpoints.Account.Get);
+            AccountWrapper accountWrapper = await helloSignService.MakeRequestAsync<AccountWrapper>(settings.HelloSignSettings.Endpoints.Account.Get);
             return accountWrapper.Account;
         }
 
-        public async Task<Account> Update(string callbackUrl)
+        public async Task<Account> UpdateAsync(string callbackUrl)
         {
-            return await Update(new AccountUpdateRequest { CallbackUrl = callbackUrl });
+            return await UpdateAsync(new AccountUpdateRequest { CallbackUrl = callbackUrl });
         }
 
-        public async Task<Account> Update(AccountUpdateRequest request)
+        public async Task<Account> UpdateAsync(AccountUpdateRequest request)
         {
             AccountWrapper accountWrapper = await helloSignService.MakeRequestAsync<AccountWrapper>(
-                settings.helloSignServiceSettings.Endpoints.Account.Update, 
+                settings.HelloSignSettings.Endpoints.Account.Update, 
                 request);
             return accountWrapper.Account;
         }
 
-        public async Task<Account> Create(string emailAddress, string password)
+        public async Task<Account> CreateAsync(string emailAddress, string password)
         {
-            return await Create(new AccountCreateRequest { EmailAddress = emailAddress, Password = password });
+            return await CreateAsync(new AccountCreateRequest { EmailAddress = emailAddress, Password = password });
         }
 
-        public async Task<Account> Create(AccountCreateRequest request)
+        public async Task<Account> CreateAsync(AccountCreateRequest request)
         {
             AccountWrapper accountWrapper = await helloSignService.MakeRequestAsync<AccountWrapper>(
-                settings.helloSignServiceSettings.Endpoints.Account.Create,
+                settings.HelloSignSettings.Endpoints.Account.Create,
                 request);
             return accountWrapper.Account;
         }

@@ -9,6 +9,6 @@ namespace RealCrowd.HelloSign.Clients
 {
     public interface IUnclaimedDraftService
     {
-        Task<UnclaimedDraft> Create(UnclaimedDraftCreateRequest request);
+        Task<UnclaimedDraft> CreateAsync(UnclaimedDraftCreateRequest request);
     }
 }

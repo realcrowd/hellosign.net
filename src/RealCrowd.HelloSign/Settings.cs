@@ -10,24 +10,24 @@ namespace RealCrowd.HelloSign
 {
     public class Settings : ISettings
     {
-        private helloSignServiceSettings settings;
+        private HelloSignSettings settings;
 
         public Settings(string path)
         {
             using (StreamReader reader = new StreamReader(path))
             {
                 string text = reader.ReadToEnd();
-                settings = JsonConvert.DeserializeObject<helloSignServiceSettings>(text);
+                settings = JsonConvert.DeserializeObject<HelloSignSettings>(text);
             }
         }
 
-        public helloSignServiceSettings helloSignServiceSettings
+        public HelloSignSettings HelloSignSettings
         {
             get { return settings; }
         }
     }
 
-    public class helloSignServiceSettings
+    public class HelloSignSettings
     {
         [JsonProperty("baseUrl")]
         public string BaseUrl { get; set; }

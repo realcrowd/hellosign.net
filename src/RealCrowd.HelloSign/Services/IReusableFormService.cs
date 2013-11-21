@@ -9,13 +9,13 @@ namespace RealCrowd.HelloSign.Clients
 {
     public interface IReusableFormService
     {
-        Task<ReusableForm> Get(string reusableFormId);
-        Task<ReusableForm> Get(ReusableFormGetRequest request);
-        Task<ReusableFormList> List(int page);
-        Task<ReusableFormList> List(ReusableFormListRequest request = null);
-        Task<ReusableForm> AddUser(string reusableFormId, string accountId, string emailAddress);
-        Task<ReusableForm> AddUser(ReusableFormAddUserRequest request);
-        Task<ReusableForm> RemoveUser(string reusableFormId, string accountId, string emailAddress);
-        Task<ReusableForm> RemoveUser(ReusableFormRemoveUserRequest request);
+        Task<ReusableForm> GetAsync(string reusableFormId);
+        Task<ReusableForm> GetAsync(ReusableFormGetRequest request);
+        Task<ReusableFormList> ListAsync(int page);
+        Task<ReusableFormList> ListAsync(ReusableFormListRequest request = null);
+        Task<ReusableForm> AddUserAsync(string reusableFormId, string accountId, string emailAddress);
+        Task<ReusableForm> AddUserAsync(ReusableFormAddUserRequest request);
+        Task<ReusableForm> RemoveUserAsync(string reusableFormId, string accountId, string emailAddress);
+        Task<ReusableForm> RemoveUserAsync(ReusableFormRemoveUserRequest request);
     }
 }

@@ -18,53 +18,53 @@ namespace RealCrowd.HelloSign.Clients
             this.helloSignService = helloSignService;
         }
 
-        public async Task<ReusableForm> Get(string reusableFormId)
+        public async Task<ReusableForm> GetAsync(string reusableFormId)
         {
-            return await Get(new ReusableFormGetRequest { ReusableFormId = reusableFormId });
+            return await GetAsync(new ReusableFormGetRequest { ReusableFormId = reusableFormId });
         }
 
-        public async Task<ReusableForm> Get(ReusableFormGetRequest request)
+        public async Task<ReusableForm> GetAsync(ReusableFormGetRequest request)
         {
             ReusableFormWrapper reusableFormWrapper = await helloSignService.MakeRequestAsync<ReusableFormWrapper>(
-                settings.helloSignServiceSettings.Endpoints.ReusableForm.Get,
+                settings.HelloSignSettings.Endpoints.ReusableForm.Get,
                 request);
             return reusableFormWrapper.ReusableForm;
         }
 
-        public async Task<ReusableFormList> List(int page)
+        public async Task<ReusableFormList> ListAsync(int page)
         {
-            return await List(new ReusableFormListRequest { Page = page });
+            return await ListAsync(new ReusableFormListRequest { Page = page });
         }
 
-        public async Task<ReusableFormList> List(ReusableFormListRequest request = null)
+        public async Task<ReusableFormList> ListAsync(ReusableFormListRequest request = null)
         {
             return await helloSignService.MakeRequestAsync<ReusableFormList>(
-                settings.helloSignServiceSettings.Endpoints.ReusableForm.List,
+                settings.HelloSignSettings.Endpoints.ReusableForm.List,
                 request);
         }
 
-        public async Task<ReusableForm> AddUser(string reusableFormId, string accountId, string emailAddress)
+        public async Task<ReusableForm> AddUserAsync(string reusableFormId, string accountId, string emailAddress)
         {
-            return await AddUser(new ReusableFormAddUserRequest { ReusableFormId = reusableFormId, AccountId = accountId, EmailAddress = emailAddress });
+            return await AddUserAsync(new ReusableFormAddUserRequest { ReusableFormId = reusableFormId, AccountId = accountId, EmailAddress = emailAddress });
         }
 
-        public async Task<ReusableForm> AddUser(ReusableFormAddUserRequest request)
+        public async Task<ReusableForm> AddUserAsync(ReusableFormAddUserRequest request)
         {
             ReusableFormWrapper wrapper = await helloSignService.MakeRequestAsync<ReusableFormWrapper>(
-                settings.helloSignServiceSettings.Endpoints.ReusableForm.AddUser,
+                settings.HelloSignSettings.Endpoints.ReusableForm.AddUser,
                 request);
             return wrapper.ReusableForm;
         }
 
-        public async Task<ReusableForm> RemoveUser(string reusableFormId, string accountId, string emailAddress)
+        public async Task<ReusableForm> RemoveUserAsync(string reusableFormId, string accountId, string emailAddress)
         {
-            return await RemoveUser(new ReusableFormRemoveUserRequest { ReusableFormId = reusableFormId, AccountId = accountId, EmailAddress = emailAddress });
+            return await RemoveUserAsync(new ReusableFormRemoveUserRequest { ReusableFormId = reusableFormId, AccountId = accountId, EmailAddress = emailAddress });
         }
 
-        public async Task<ReusableForm> RemoveUser(ReusableFormRemoveUserRequest request)
+        public async Task<ReusableForm> RemoveUserAsync(ReusableFormRemoveUserRequest request)
         {
             ReusableFormWrapper wrapper = await helloSignService.MakeRequestAsync<ReusableFormWrapper>(
-                settings.helloSignServiceSettings.Endpoints.ReusableForm.RemoveUser,
+                settings.HelloSignSettings.Endpoints.ReusableForm.RemoveUser,
                 request);
             return wrapper.ReusableForm;
         }

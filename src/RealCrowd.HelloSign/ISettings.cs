@@ -8,6 +8,6 @@ namespace RealCrowd.HelloSign
 {
     public interface ISettings
     {
-        helloSignServiceSettings helloSignServiceSettings { get; }
+        HelloSignSettings HelloSignSettings { get; }
     }
 }

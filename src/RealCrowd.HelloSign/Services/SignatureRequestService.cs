@@ -19,81 +19,81 @@ namespace RealCrowd.HelloSign.Clients
             this.helloSignService = helloSignService;
         }
 
-        public async Task<SignatureRequest> Get(string signatureRequestId)
+        public async Task<SignatureRequest> GetAsync(string signatureRequestId)
         {
-            return await Get(new SignatureRequestGetRequest { SignatureRequestId = signatureRequestId });
+            return await GetAsync(new SignatureRequestGetRequest { SignatureRequestId = signatureRequestId });
         }
 
-        public async Task<SignatureRequest> Get(SignatureRequestGetRequest request)
+        public async Task<SignatureRequest> GetAsync(SignatureRequestGetRequest request)
         {
             SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
-                settings.helloSignServiceSettings.Endpoints.SignatureRequest.Get,
+                settings.HelloSignSettings.Endpoints.SignatureRequest.Get,
                 request);
             return signatureRequestWrapper.SignatureRequest;
         }
 
-        public async Task<SignatureRequestList> List(int page)
+        public async Task<SignatureRequestList> ListAsync(int page)
         {
-            return await List(new SignatureRequestListRequest { Page = page });
+            return await ListAsync(new SignatureRequestListRequest { Page = page });
         }
 
-        public async Task<SignatureRequestList> List(SignatureRequestListRequest request = null)
+        public async Task<SignatureRequestList> ListAsync(SignatureRequestListRequest request = null)
         {
             return await helloSignService.MakeRequestAsync<SignatureRequestList>(
-                settings.helloSignServiceSettings.Endpoints.SignatureRequest.List,
+                settings.HelloSignSettings.Endpoints.SignatureRequest.List,
                 request != null ? request : new SignatureRequestListRequest());
         }
 
-        public async Task<SignatureRequest> Send(SignatureRequestSendRequest request)
+        public async Task<SignatureRequest> SendAsync(SignatureRequestSendRequest request)
         {
             SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
-                settings.helloSignServiceSettings.Endpoints.SignatureRequest.Send,
+                settings.HelloSignSettings.Endpoints.SignatureRequest.Send,
                 request);
 
             return signatureRequestWrapper.SignatureRequest;
         }
 
-        public async Task<SignatureRequest> SendWithReusableForm(SignatureRequestSendReusableFormRequest request)
+        public async Task<SignatureRequest> SendWithReusableFormAsync(SignatureRequestSendReusableFormRequest request)
         {
             SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
-                settings.helloSignServiceSettings.Endpoints.SignatureRequest.SendForm,
+                settings.HelloSignSettings.Endpoints.SignatureRequest.SendForm,
                 request);
 
             return signatureRequestWrapper.SignatureRequest;
         }
 
-        public async Task<SignatureRequest> Remind(string signatureRequestId, string emailAddress)
+        public async Task<SignatureRequest> RemindAsync(string signatureRequestId, string emailAddress)
         {
-            return await Remind(new SignatureRequestRemindRequest { SignatureRequestId = signatureRequestId, EmailAddress = emailAddress });
+            return await RemindAsync(new SignatureRequestRemindRequest { SignatureRequestId = signatureRequestId, EmailAddress = emailAddress });
         }
 
-        public async Task<SignatureRequest> Remind(SignatureRequestRemindRequest request)
+        public async Task<SignatureRequest> RemindAsync(SignatureRequestRemindRequest request)
         {
             SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
-                settings.helloSignServiceSettings.Endpoints.SignatureRequest.Remind,
+                settings.HelloSignSettings.Endpoints.SignatureRequest.Remind,
                 request);
             return signatureRequestWrapper.SignatureRequest;
         }
 
-        public async Task<bool> Cancel(string signatureRequestId)
+        public async Task<bool> CancelAsync(string signatureRequestId)
         {
-            return await Cancel(new SignatureRequestCancelRequest { SignatureRequestId = signatureRequestId });
+            return await CancelAsync(new SignatureRequestCancelRequest { SignatureRequestId = signatureRequestId });
         }
 
-        public async Task<bool> Cancel(SignatureRequestCancelRequest request)
+        public async Task<bool> CancelAsync(SignatureRequestCancelRequest request)
         {
             dynamic response = await helloSignService.MakeRequestAsync<dynamic>(
-                settings.helloSignServiceSettings.Endpoints.SignatureRequest.Remind,
+                settings.HelloSignSettings.Endpoints.SignatureRequest.Remind,
                 request);
             return response != null;
         }
 
-        public async Task<byte[]> FinalCopy(string signatureRequestId)
+        public async Task<byte[]> FinalCopyAsync(string signatureRequestId)
         {
-            return await FinalCopy(new SignatureRequestFinalCopyRequest { SignatureRequestId = signatureRequestId });
+            return await FinalCopyAsync(new SignatureRequestFinalCopyRequest { SignatureRequestId = signatureRequestId });
         }
 
-        public async Task<byte[]> FinalCopy(SignatureRequestFinalCopyRequest request)
+        public async Task<byte[]> FinalCopyAsync(SignatureRequestFinalCopyRequest request)
         {
             throw new NotImplementedException();
         }

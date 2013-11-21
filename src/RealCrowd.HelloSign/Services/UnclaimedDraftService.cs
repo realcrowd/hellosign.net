@@ -18,10 +18,10 @@ namespace RealCrowd.HelloSign.Clients
             this.helloSignService = helloSignService;
         }
 
-        public async Task<UnclaimedDraft> Create(UnclaimedDraftCreateRequest request)
+        public async Task<UnclaimedDraft> CreateAsync(UnclaimedDraftCreateRequest request)
         {
             UnclaimedDraftWrapper wrapper = await helloSignService.MakeRequestAsync<UnclaimedDraftWrapper>(
-                settings.helloSignServiceSettings.Endpoints.UnclaimedDraft.Create,
+                settings.HelloSignSettings.Endpoints.UnclaimedDraft.Create,
                 request);
             return wrapper.UnclaimedDraft;
         }

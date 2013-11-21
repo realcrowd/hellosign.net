@@ -14,7 +14,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
         {
             HelloSignClient client = new HelloSignClient(Config.Username, Config.Password);
 
-            ReusableFormList list = await client.ReusableForm.List();
+            ReusableFormList list = await client.ReusableForm.ListAsync();
             Assert.IsTrue(list.ListInfo.NumResults > 0);
         }
 

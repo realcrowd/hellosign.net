@@ -40,7 +40,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
                 }
             };
 
-            SignatureRequest signatureRequest = await client.SignatureRequest.Send(sendRequest);
+            SignatureRequest signatureRequest = await client.SignatureRequest.SendAsync(sendRequest);
 
             Assert.IsTrue(signatureRequest.Title == sendRequest.Title);
             Assert.IsTrue(signatureRequest.Subject == sendRequest.Subject);
@@ -52,7 +52,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
         public async Task ListSignatureRequestsTest()
         {
             HelloSignClient client = new HelloSignClient(Config.Username, Config.Password);
-            SignatureRequestList list = await client.SignatureRequest.List();
+            SignatureRequestList list = await client.SignatureRequest.ListAsync();
             Assert.IsTrue(list.ListInfo.NumResults > 0);
         }
 
