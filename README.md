@@ -44,9 +44,9 @@ To configure the tests, create a HelloSign account and then set the following tw
 
 ## Copyright and License
 
-Copyright 2013 GitHub, Inc.
+Copyright 2013 RealCrowd, Inc.
 
-Licensed under the [MIT License](https://github.com/realcrowd/hellosign.net/blob/master/LICENSE.txt)
+Licensed under the [MIT License](https://github.com/realcrowd/hellosign.net/blob/master/LICENSE)
 
 ## Deploying a new release
 
