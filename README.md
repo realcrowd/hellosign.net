@@ -21,13 +21,9 @@ Console.WriteLine("Your current callback: " + account.CallbackUrl);
 
 HelloSign.Net is available on NuGet.
 
-```
-Install-Package HelloSign.Net
-```
 
 ## Build
 
-```
 
 ##NuGet Packages
   
