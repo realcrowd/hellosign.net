@@ -9,7 +9,7 @@ Get account information
 
 ```c#
 var helloSign = new HelloSignClient("username", "password");
-Account account = await helloSign.Account.Get(); 
+Account account = await helloSign.Account.GetAsync(); 
 Console.WriteLine("Your current callback: " + account.CallbackUrl);
 ```
 

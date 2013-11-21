@@ -1,4 +1,6 @@
-﻿using RealCrowd.HelloSign.Clients;
+﻿// Copyright (c) RealCrowd, Inc. All rights reserved. See LICENSE in the project root for license information.
+
+using RealCrowd.HelloSign.Clients;
 using Newtonsoft.Json;
 using Ninject;
 using System;
