@@ -99,5 +99,19 @@ namespace RealCrowd.HelloSign.Clients
         {
             throw new NotImplementedException();
         }
+
+        public async Task<List<SignatureRequest>> CreateEmbeddedWithReusableFormAsync(SignatureRequestSendReusableFormRequest request)
+        {
+            return await helloSignService.MakeRequestAsync<List<SignatureRequest>>(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.CreateEmbeddedWithReusableForm,
+                request);
+        }
+
+        public async Task<List<SignatureRequest>> CreateEmbeddedAsync(SignatureRequestSendRequest request)
+        {
+            return await helloSignService.MakeRequestAsync<List<SignatureRequest>>(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.CreateEmbedded,
+                request);
+        }
     }
 }

@@ -79,7 +79,17 @@
 			{
 				method: 'POST',
 				url: '/signature_request/send_with_reusable_form'
-			}	
+			},
+			createEmbeddedWithReusableForm:
+			{
+				method: 'POST',
+				url: '/signature_request/create_embedded_with_reusable_form'
+			},
+			createEmbedded
+			{
+				method: 'POST',
+				url: '/signature_request/create_embedded'
+			}
 		},
 		team:
 		{
@@ -120,6 +130,14 @@
 			{
 				method: 'POST',
 				url: '/unclaimed_draft/create'
+			}
+		},
+		embedded:
+		{
+			getSignUrl:
+			{
+				method: 'GET',
+				url: '/embedded/sign_url/{signature_id}'
 			}
 		}
 	}

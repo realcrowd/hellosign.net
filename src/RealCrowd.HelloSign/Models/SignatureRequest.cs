@@ -202,7 +202,7 @@ namespace RealCrowd.HelloSign.Models
         public string Title { get; set; }
         public string Subject { get; set; }
         public string Message { get; set; }
-        public IDictionary<string, SignatureRequestSendReusableFormSignerRequest> Signers { get; set; }
+        public IDictionary<string, SignatureRequestSignerRequest> Signers { get; set; }
         public IDictionary<string, string> Ccs { get; set; }
         public IDictionary<string, string> CustomFields { get; set; }
 
@@ -224,7 +224,7 @@ namespace RealCrowd.HelloSign.Models
             if (!string.IsNullOrEmpty(Message))
                 data.Add("message", Message);
 
-            foreach (KeyValuePair<string, SignatureRequestSendReusableFormSignerRequest> signer in Signers)
+            foreach (KeyValuePair<string, SignatureRequestSignerRequest> signer in Signers)
             {
                 data.Add("signers[" + signer.Key + "][name]", signer.Value.Name);
                 data.Add("signers[" + signer.Key + "][email_address]", signer.Value.EmailAddress);
@@ -250,7 +250,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
-    public class SignatureRequestSendReusableFormSignerRequest
+    public class SignatureRequestSignerRequest
     {
         public string Name { get; set; }
         public string EmailAddress { get; set; }

@@ -49,6 +49,8 @@ namespace RealCrowd.HelloSign
         public TeamEndpoints Team { get; set; }
         [JsonProperty("unclaimedDraft")]
         public UnclaimedDraftEndpoints UnclaimedDraft { get; set; }
+        [JsonProperty("embedded")]
+        public EmbeddedEndpoints Embedded { get; set; }
     }
 
     public class AccountEndpoints
@@ -89,6 +91,10 @@ namespace RealCrowd.HelloSign
         public Endpoint Cancel { get; set; }
         [JsonProperty("sendForm")]
         public Endpoint SendForm { get; set; }
+        [JsonProperty("createEmbeddedWithReusableForm")]
+        public Endpoint CreateEmbeddedWithReusableForm { get; set; }
+        [JsonProperty("createEmbedded")]
+        public Endpoint CreateEmbedded { get; set; }
     }
 
     public class TeamEndpoints
@@ -111,6 +117,12 @@ namespace RealCrowd.HelloSign
     {
         [JsonProperty("create")]
         public Endpoint Create { get; set; }
+    }
+
+    public class EmbeddedEndpoints
+    {
+        [JsonProperty("getSignUrl")]
+        public Endpoint GetSignUrl { get; set; }
     }
 
     public class Endpoint
