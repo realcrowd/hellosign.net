@@ -115,11 +115,11 @@ namespace RealCrowd.HelloSign
                 string key = data.Keys.ElementAt(i);
                 sBuilder.Append(key);
                 sBuilder.Append("=");
-                sBuilder.Append(data[key].ToString());
+                sBuilder.Append(HttpUtility.UrlEncode(data[key].ToString()));
                 if (i < data.Keys.Count - 1)
                     sBuilder.Append("&");
             }
-            return HttpUtility.UrlEncode(sBuilder.ToString());
+            return sBuilder.ToString();
         }
     }
 }

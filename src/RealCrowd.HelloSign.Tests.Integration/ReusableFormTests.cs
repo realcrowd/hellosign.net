@@ -11,11 +11,17 @@ namespace RealCrowd.HelloSign.Tests.Integration
     [TestClass]
     public class ReusableFormTests
     {
+        HelloSignClient client;
+
+        [TestInitialize]
+        public void Init()
+        {
+            client = new HelloSignClient(Config.Username, Config.Password);
+        }
+
         [TestMethod]
         public async Task ListReusableFormsTest()
         {
-            HelloSignClient client = new HelloSignClient(Config.Username, Config.Password);
-
             ReusableFormList list = await client.ReusableForm.ListAsync();
             Assert.IsTrue(list.ListInfo.NumResults > 0);
         }

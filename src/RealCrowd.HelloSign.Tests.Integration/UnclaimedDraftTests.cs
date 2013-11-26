@@ -9,6 +9,14 @@ namespace RealCrowd.HelloSign.Tests.Integration
     [TestClass]
     public class UnclaimedDraftTests
     {
+        HelloSignClient client;
+
+        [TestInitialize]
+        public void Init()
+        {
+            client = new HelloSignClient(Config.Username, Config.Password);
+        }
+
         [TestMethod]
         public async Task CreateUnclaimedDraftTest()
         {

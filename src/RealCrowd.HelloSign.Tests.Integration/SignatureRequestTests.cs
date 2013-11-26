@@ -12,11 +12,17 @@ namespace RealCrowd.HelloSign.Tests.Integration
     [TestClass]
     public class SignatureRequestTests
     {
+        HelloSignClient client;
+        
+        [TestInitialize]
+        public void Init()
+        {
+            client = new HelloSignClient(Config.Username, Config.Password);
+        }
+
         [TestMethod]
         public async Task CreateAndSendSignatureRequestTest()
         {
-            HelloSignClient client = new HelloSignClient(Config.Username, Config.Password);
-            
             SignatureRequestSendRequest sendRequest = new SignatureRequestSendRequest
             {
                 TestMode = 1,
@@ -64,9 +70,28 @@ namespace RealCrowd.HelloSign.Tests.Integration
 
         }
 
+        [TestMethod]
         public async Task SendWithReusableFormTest()
         {
-            
+            SignatureRequestSendReusableFormRequest sendRequest = new SignatureRequestSendReusableFormRequest
+            {
+                TestMode = 1,
+                ReusableFormId = "",
+                Title = "Test Title",
+                Subject = "Test Subject",
+                Message = "Test Message",
+                Signers = new Dictionary<string, SignatureRequestSignerRequest>()
+                {
+                    { "Test", new SignatureRequestSignerRequest { Name = "", EmailAddress = "" } },
+                    { "Test 2", new SignatureRequestSignerRequest { Name = "", EmailAddress = "" } }
+                }
+            };
+
+            SignatureRequest signatureRequest = await client.SignatureRequest.SendWithReusableFormAsync(sendRequest);
+
+            Assert.IsTrue(signatureRequest.Title == sendRequest.Title);
+            Assert.IsTrue(signatureRequest.Subject == sendRequest.Subject);
+            Assert.IsTrue(signatureRequest.Message == sendRequest.Message);
         }
 
         public async Task RemindSignatureRequestTest()

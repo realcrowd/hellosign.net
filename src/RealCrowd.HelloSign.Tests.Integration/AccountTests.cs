@@ -11,11 +11,17 @@ namespace RealCrowd.HelloSign.Tests.Integration
     [TestClass]
     public class AccountTests
     {
+        HelloSignClient client;
+
+        [TestInitialize]
+        public void Init()
+        {
+            client = new HelloSignClient(Config.Username, Config.Password);
+        }
+
         [TestMethod]
         public async Task SetCallbackTest()
         {
-            HelloSignClient client = new HelloSignClient(Config.Username, Config.Password);
-
             Account account = await client.Account.GetAsync();
             Assert.IsTrue(account.EmailAddress == Config.Username);
 

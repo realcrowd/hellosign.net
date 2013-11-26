@@ -11,11 +11,17 @@ namespace RealCrowd.HelloSign.Tests.Integration
     [TestClass]
     public class TeamTests
     {
+        HelloSignClient client;
+
+        [TestInitialize]
+        public void Init()
+        {
+            client = new HelloSignClient(Config.Username, Config.Password);
+        }
+
         [TestMethod]
         public async Task GetTeamTest()
         {
-            HelloSignClient client = new HelloSignClient(Config.Username, Config.Password);
-
             Team team = await client.Team.GetAsync();
 
             Assert.IsTrue(!string.IsNullOrEmpty(team.Name));
