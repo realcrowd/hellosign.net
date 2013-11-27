@@ -37,6 +37,8 @@ namespace RealCrowd.HelloSign.Models
         public string FinalCopyUri { get; internal set; }
         [JsonProperty("signing_url")]
         public string SigningUrl { get; internal set; }
+        [JsonProperty("signing_redirect_url")]
+        public string SigningRedirectUrl { get; internal set; }
         [JsonProperty("details_url")]
         public string DetailsUrl { get; internal set; }
         [JsonProperty("cc_email_addresses")]
@@ -61,6 +63,8 @@ namespace RealCrowd.HelloSign.Models
 
     public class Signature
     {
+        [JsonProperty("signature_id")]
+        public string SignatureId { get; internal set; }
         [JsonProperty("signer_email_address")]
         public string SignerEmailAddress { get; internal set; }
         [JsonProperty("signer_name")]
