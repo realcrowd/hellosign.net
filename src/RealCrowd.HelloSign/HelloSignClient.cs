@@ -28,8 +28,7 @@ namespace RealCrowd.HelloSign
             kernel
                 .Bind<ISettings>()
                 .To<Settings>()
-                .InSingletonScope()
-                .WithConstructorArgument("path", "Settings.json");
+                .InSingletonScope();
 
             kernel
                 .Bind<IHelloSignService>()

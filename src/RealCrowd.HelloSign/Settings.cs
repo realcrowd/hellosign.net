@@ -14,18 +14,67 @@ namespace RealCrowd.HelloSign
     {
         private HelloSignSettings settings;
 
-        public Settings(string path)
+        public Settings()
         {
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string text = reader.ReadToEnd();
-                settings = JsonConvert.DeserializeObject<HelloSignSettings>(text);
-            }
+            LoadSettings();
         }
 
         public HelloSignSettings HelloSignSettings
         {
             get { return settings; }
+        }
+
+        private void LoadSettings()
+        {
+            settings = new HelloSignSettings
+            {
+                BaseUrl = "https://api.hellosign.com/v3",
+                Endpoints = new Endpoints
+                {
+                    Account = new AccountEndpoints
+                    {
+                        Create = new Endpoint { Method = "POST", Url = "/account" },
+                        Get = new Endpoint { Method = "GET", Url = "/account" },
+                        Update = new Endpoint { Method = "POST", Url = "/account/create" }
+                    },
+                    Embedded = new EmbeddedEndpoints
+                    {
+                        GetSignUrl = new Endpoint { Method = "GET", Url = "/embedded/sign_url/{signature_id}" }
+                    },
+                    ReusableForm = new ReusableFormEndpoints
+                    {
+                        AddUser = new Endpoint { Method = "POST", Url = "/reusable_form/add_user/{reusable_form_id}" },
+                        Get = new Endpoint { Method = "GET", Url = "/reusable_form/{reusable_form_id}" },
+                        List = new Endpoint { Method = "GET", Url = "/reusable_form/list" },
+                        RemoveUser = new Endpoint { Method = "POST", Url = "/reusable_form/remove_user/{reusable_form_id}" }
+                    },
+                    SignatureRequest = new SignatureRequestEndpoints
+                    {
+                        Cancel = new Endpoint { Method = "POST", Url = "/signature_request/cancel/{signature_request_id}" },
+                        CreateEmbedded = new Endpoint { Method = "POST", Url = "/signature_request/create_embedded" },
+                        CreateEmbeddedWithReusableForm = new Endpoint { Method = "POST", Url = "/signature_request/create_embedded_with_reusable_form" },
+                        Get = new Endpoint { Method = "GET", Url = "/signature_request/{signature_request_id}" },
+                        GetFinalCopy = new Endpoint { Method = "GET", Url = "/signature_request/final_copy/{signature_request_id}" },
+                        List = new Endpoint { Method = "GET", Url = "/signature_request/list" },
+                        Remind = new Endpoint { Method = "POST", Url = "/signature_request/remind/{signature_request_id}" },
+                        Send = new Endpoint { Method = "POST", Url = "/signature_request/send" },
+                        SendForm = new Endpoint { Method = "POST", Url = "/signature_request/send_with_reusable_form" }
+                    },
+                    Team = new TeamEndpoints
+                    {
+                        AddMember = new Endpoint { Method = "POST", Url = "/team/add_member" },
+                        Create = new Endpoint { Method = "POST", Url = "/team/create" },
+                        Destory = new Endpoint { Method = "POST", Url = "/team/destroy" },
+                        Get = new Endpoint { Method = "GET", Url = "/team" },
+                        RemoveMember = new Endpoint { Method = "POST", Url = "/team/remove_member" },
+                        Update = new Endpoint { Method = "POST", Url = "/team" }
+                    },
+                    UnclaimedDraft = new UnclaimedDraftEndpoints
+                    {
+                        Create = new Endpoint { Method = "POST", Url = "/unclaimed_draft/create" }
+                    }
+                }
+            };
         }
     }
 
