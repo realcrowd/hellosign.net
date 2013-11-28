@@ -30,7 +30,7 @@ namespace RealCrowd.HelloSign.Models
         [JsonProperty("message")]
         public string Message { get; internal set; }
         [JsonProperty("is_complete")]
-        public string IsComplete { get; internal set; }
+        public bool IsComplete { get; internal set; }
         [JsonProperty("has_error")]
         public bool HasError { get; internal set; }
         [JsonProperty("final_copy_uri")]
@@ -74,11 +74,11 @@ namespace RealCrowd.HelloSign.Models
         [JsonProperty("status_code")]
         public string StatusCode { get; internal set; }
         [JsonProperty("signed_at")]
-        public string SignedAt { get; internal set; }
+        public long? SignedAt { get; internal set; }
         [JsonProperty("last_viewed_at")]
-        public string LastViewedAt { get; internal set; }
+        public long? LastViewedAt { get; internal set; }
         [JsonProperty("last_reminded_at")]
-        public string LastRemindedAt { get; internal set; }
+        public long? LastRemindedAt { get; internal set; }
     }
 
     public class SignatureRequestList
