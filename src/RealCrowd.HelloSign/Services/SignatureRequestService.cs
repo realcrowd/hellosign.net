@@ -85,9 +85,9 @@ namespace RealCrowd.HelloSign.Clients
         public async Task<bool> CancelAsync(SignatureRequestCancelRequest request)
         {
             dynamic response = await helloSignService.MakeRequestAsync<dynamic>(
-                settings.HelloSignSettings.Endpoints.SignatureRequest.Remind,
+                settings.HelloSignSettings.Endpoints.SignatureRequest.Cancel,
                 request);
-            return response != null;
+            return true;
         }
 
         public async Task<byte[]> FinalCopyAsync(string signatureRequestId)
