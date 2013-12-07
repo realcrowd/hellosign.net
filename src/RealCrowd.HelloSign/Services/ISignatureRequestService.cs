@@ -3,7 +3,9 @@
 using RealCrowd.HelloSign.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,8 +23,8 @@ namespace RealCrowd.HelloSign.Clients
         Task<SignatureRequest> RemindAsync(SignatureRequestRemindRequest request);
         Task<bool> CancelAsync(string signatureRequestId);
         Task<bool> CancelAsync(SignatureRequestCancelRequest request);
-        Task<byte[]> FinalCopyAsync(string signatureRequestId);
-        Task<byte[]> FinalCopyAsync(SignatureRequestFinalCopyRequest request);
+        Task FinalCopyAsync(string signatureRequestId, Action<Stream> onStreamAvailable);
+        Task FinalCopyAsync(SignatureRequestFinalCopyRequest request);
         Task<List<SignatureRequest>> CreateEmbeddedWithReusableFormAsync(SignatureRequestSendReusableFormRequest request);
         Task<List<SignatureRequest>> CreateEmbeddedAsync(SignatureRequestSendRequest request);
     }

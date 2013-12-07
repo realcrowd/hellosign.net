@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Embedded.cs" />
+    <Compile Include="Models\IHelloSignStreamRequest.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\EmbeddedService.cs" />
     <Compile Include="Services\IAccountService.cs" />

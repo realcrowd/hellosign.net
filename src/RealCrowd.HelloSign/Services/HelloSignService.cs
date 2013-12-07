@@ -29,23 +29,9 @@ namespace RealCrowd.HelloSign
 
         public async Task<T> MakeRequestAsync<T>(Endpoint endpoint, IHelloSignRequest request = null)
         {
-            IDictionary<string, object> requestParams = request != null ? request.ToRequestParams() : new Dictionary<string, object>();
-            if (requestParams == null)
-                requestParams = new Dictionary<string, object>();
-            
-            string endpointUrl = endpoint.Url;
-
-            IDictionary<string, object> queryParams = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, object> rParam in requestParams)
-            {
-                string stringKey = "{" + rParam.Key + "}";
-                if (endpointUrl.Contains(stringKey))
-                    endpointUrl = endpointUrl.Replace(stringKey, rParam.Value.ToString());
-                else
-                    queryParams.Add(rParam);
-            }
-
-            string dataString = BuildParams(queryParams);
+            Tuple<string, string> endpointUrlAndParams = BuildEndpointUrlAndParams(endpoint, request);
+            string endpointUrl = endpointUrlAndParams.Item1;
+            string dataString = endpointUrlAndParams.Item2;
 
             switch (endpoint.Method)
             {
@@ -55,6 +41,30 @@ namespace RealCrowd.HelloSign
                     return await MakePostRequestAsync<T>(endpointUrl, dataString);
                 default:
                     throw new Exception("Method not defined properly for endpoint: " + endpoint.Url);
+            }
+        }
+
+        public async Task MakeStreamRequestAsync(Endpoint endpoint, IHelloSignStreamRequest request)
+        {
+            Tuple<string, string> endpointUrlAndParams = BuildEndpointUrlAndParams(endpoint, request);
+            string endpointUrl = endpointUrlAndParams.Item1;
+            string data = endpointUrlAndParams.Item2;
+
+            string url = settings.HelloSignSettings.BaseUrl + endpointUrl;
+
+            if (!string.IsNullOrEmpty(data))
+                url += "?" + data;
+
+            var webReq = (HttpWebRequest)WebRequest.Create(url);
+            webReq.Credentials = new NetworkCredential(username, password);
+            webReq.ContentType = endpoint.ContentType;
+
+            using (var response = await webReq.GetResponseAsync())
+            {
+                using (var outputStream = response.GetResponseStream())
+                {
+                    request.OnStreamAvailable(outputStream);
+                }
             }
         }
 
@@ -102,6 +112,27 @@ namespace RealCrowd.HelloSign
                     return JsonConvert.DeserializeObject<T>(responseString);
                 }
             }
+        }
+
+        private Tuple<string, string> BuildEndpointUrlAndParams(Endpoint endpoint, IHelloSignRequest request)
+        {
+            IDictionary<string, object> requestParams = request != null ? request.ToRequestParams() : new Dictionary<string, object>();
+            if (requestParams == null)
+                requestParams = new Dictionary<string, object>();
+
+            string endpointUrl = endpoint.Url;
+
+            IDictionary<string, object> queryParams = new Dictionary<string, object>();
+            foreach (KeyValuePair<string, object> rParam in requestParams)
+            {
+                string stringKey = "{" + rParam.Key + "}";
+                if (endpointUrl.Contains(stringKey))
+                    endpointUrl = endpointUrl.Replace(stringKey, rParam.Value.ToString());
+                else
+                    queryParams.Add(rParam);
+            }
+
+            return new Tuple<string, string>(endpointUrl, BuildParams(queryParams));
         }
 
         private string BuildParams(IDictionary<string, object> data)

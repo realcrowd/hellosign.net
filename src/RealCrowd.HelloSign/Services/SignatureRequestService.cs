@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Net;
 
 namespace RealCrowd.HelloSign.Clients
 {
@@ -90,14 +92,15 @@ namespace RealCrowd.HelloSign.Clients
             return true;
         }
 
-        public async Task<byte[]> FinalCopyAsync(string signatureRequestId)
+        public async Task FinalCopyAsync(string signatureRequestId, Action<Stream> onStreamAvailable)
         {
-            return await FinalCopyAsync(new SignatureRequestFinalCopyRequest { SignatureRequestId = signatureRequestId });
+            await FinalCopyAsync(new SignatureRequestFinalCopyRequest(onStreamAvailable) { SignatureRequestId = signatureRequestId });
         }
 
-        public async Task<byte[]> FinalCopyAsync(SignatureRequestFinalCopyRequest request)
+        public async Task FinalCopyAsync(SignatureRequestFinalCopyRequest request)
         {
-            throw new NotImplementedException();
+            await helloSignService.MakeStreamRequestAsync(settings.HelloSignSettings.Endpoints.SignatureRequest.GetFinalCopy,
+                request);
         }
 
         public async Task<List<SignatureRequest>> CreateEmbeddedWithReusableFormAsync(SignatureRequestSendReusableFormRequest request)

@@ -6,6 +6,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using RealCrowd.HelloSign;
 using RealCrowd.HelloSign.Models;
+using System.IO;
+using System.Net;
 
 namespace RealCrowd.HelloSign.Tests.Integration
 {
@@ -76,14 +78,14 @@ namespace RealCrowd.HelloSign.Tests.Integration
             SignatureRequestSendReusableFormRequest sendRequest = new SignatureRequestSendReusableFormRequest
             {
                 TestMode = 1,
-                ReusableFormId = "",
+                ReusableFormId = "d95e188615fae3fab2fd717ed1190d42083b81f1",
                 Title = "Test Title",
                 Subject = "Test Subject",
                 Message = "Test Message",
                 Signers = new Dictionary<string, SignatureRequestSignerRequest>()
                 {
-                    { "Test", new SignatureRequestSignerRequest { Name = "", EmailAddress = "" } },
-                    { "Test 2", new SignatureRequestSignerRequest { Name = "", EmailAddress = "" } }
+                    { "Test", new SignatureRequestSignerRequest { Name = "Ross Stovall", EmailAddress = "ross@realcrowd.com" } },
+                    { "Test 2", new SignatureRequestSignerRequest { Name = "Ross Stovall", EmailAddress = "rossco@gmail.com" } }
                 }
             };
 
@@ -104,9 +106,31 @@ namespace RealCrowd.HelloSign.Tests.Integration
 
         }
 
+        [TestMethod]
         public async Task FinalCopySignautreRequestTest()
         {
+            string signatureRequestId = "";
 
+            Action<Stream> onStreamAvailable = (outputStream) =>
+            {
+                string filePath = @"C:\test\test.pdf";
+                byte[] buffer = new byte[32768];
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    int bytesRead;
+                    while ((bytesRead = outputStream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        fileStream.Write(buffer, 0, bytesRead);
+                    }
+                }
+            };
+
+            SignatureRequestFinalCopyRequest request = new SignatureRequestFinalCopyRequest(onStreamAvailable)
+            {
+                SignatureRequestId = signatureRequestId
+            };
+
+            await client.SignatureRequest.FinalCopyAsync(request);
         }
     }
 }

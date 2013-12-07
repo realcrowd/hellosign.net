@@ -3,6 +3,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -293,10 +294,17 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
-    public class SignatureRequestFinalCopyRequest : IHelloSignRequest
+    public class SignatureRequestFinalCopyRequest : IHelloSignStreamRequest
     {
         public string SignatureRequestId { get; set; }
-        
+
+        public Action<Stream> OnStreamAvailable { get; set; }
+
+        public SignatureRequestFinalCopyRequest(Action<Stream> onStreamAvailable)
+        {
+            OnStreamAvailable = onStreamAvailable;
+        }
+
         public IDictionary<string, object> ToRequestParams()
         {
             return new Dictionary<string, object>
