@@ -109,9 +109,9 @@ namespace RealCrowd.HelloSign.Tests.Integration
         [TestMethod]
         public async Task FinalCopySignautreRequestTest()
         {
-            string signatureRequestId = "";
+            string signatureRequestId = "9556db0a06f1f7e8227820561f6a57652bb64c96";
 
-            Action<Stream> onStreamAvailable = (outputStream) =>
+            Func<Stream, Task> onStreamAvailable = async (outputStream) =>
             {
                 string filePath = @"C:\test\test.pdf";
                 byte[] buffer = new byte[32768];
@@ -120,7 +120,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
                     int bytesRead;
                     while ((bytesRead = outputStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        fileStream.Write(buffer, 0, bytesRead);
+                        await fileStream.WriteAsync(buffer, 0, bytesRead);
                     }
                 }
             };

@@ -92,7 +92,7 @@ namespace RealCrowd.HelloSign.Clients
             return true;
         }
 
-        public async Task FinalCopyAsync(string signatureRequestId, Action<Stream> onStreamAvailable)
+        public async Task FinalCopyAsync(string signatureRequestId, Func<Stream, Task> onStreamAvailable)
         {
             await FinalCopyAsync(new SignatureRequestFinalCopyRequest(onStreamAvailable) { SignatureRequestId = signatureRequestId });
         }

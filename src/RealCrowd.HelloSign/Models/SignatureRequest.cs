@@ -298,9 +298,9 @@ namespace RealCrowd.HelloSign.Models
     {
         public string SignatureRequestId { get; set; }
 
-        public Action<Stream> OnStreamAvailable { get; set; }
+        public Func<Stream, Task> OnStreamAvailable { get; set; }
 
-        public SignatureRequestFinalCopyRequest(Action<Stream> onStreamAvailable)
+        public SignatureRequestFinalCopyRequest(Func<Stream, Task> onStreamAvailable)
         {
             OnStreamAvailable = onStreamAvailable;
         }

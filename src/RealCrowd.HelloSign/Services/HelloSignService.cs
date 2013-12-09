@@ -63,7 +63,7 @@ namespace RealCrowd.HelloSign
             {
                 using (var outputStream = response.GetResponseStream())
                 {
-                    request.OnStreamAvailable(outputStream);
+                    await request.OnStreamAvailable(outputStream);
                 }
             }
         }
