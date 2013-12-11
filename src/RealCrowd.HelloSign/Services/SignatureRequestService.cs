@@ -50,11 +50,7 @@ namespace RealCrowd.HelloSign.Clients
 
         public async Task<SignatureRequest> SendAsync(SignatureRequestSendRequest request)
         {
-            SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
-                settings.HelloSignSettings.Endpoints.SignatureRequest.Send,
-                request);
-
-            return signatureRequestWrapper.SignatureRequest;
+            throw new NotImplementedException();
         }
 
         public async Task<SignatureRequest> SendWithReusableFormAsync(SignatureRequestSendReusableFormRequest request)
