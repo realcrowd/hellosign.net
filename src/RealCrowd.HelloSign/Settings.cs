@@ -33,9 +33,9 @@ namespace RealCrowd.HelloSign
                 {
                     Account = new AccountEndpoints
                     {
-                        Create = new Endpoint { Method = "POST", Url = "/account" },
+                        Create = new Endpoint { Method = "POST", Url = "/account/create" },
                         Get = new Endpoint { Method = "GET", Url = "/account" },
-                        Update = new Endpoint { Method = "POST", Url = "/account/create" }
+                        Update = new Endpoint { Method = "POST", Url = "/account" }
                     },
                     Embedded = new EmbeddedEndpoints
                     {

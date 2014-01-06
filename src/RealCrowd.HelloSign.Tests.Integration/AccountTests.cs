@@ -25,8 +25,8 @@ namespace RealCrowd.HelloSign.Tests.Integration
             Account account = await client.Account.GetAsync();
             Assert.IsTrue(account.EmailAddress == Config.Username);
 
-            Account accountUpdate = await client.Account.UpdateAsync(new AccountUpdateRequest { CallbackUrl = "http://test" });
-            Assert.IsTrue(accountUpdate.CallbackUrl == "http://test");
+            Account accountUpdate = await client.Account.UpdateAsync(new AccountUpdateRequest { CallbackUrl = "http://test.com" });
+            Assert.IsTrue(accountUpdate.CallbackUrl == "http://test.com");
 
             Account accountUpdateDeleteCallback = await client.Account.UpdateAsync(new AccountUpdateRequest { CallbackUrl = "" });
             Assert.IsTrue(accountUpdateDeleteCallback.CallbackUrl == null);
