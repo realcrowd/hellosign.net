@@ -78,14 +78,14 @@ namespace RealCrowd.HelloSign.Tests.Integration
             SignatureRequestSendReusableFormRequest sendRequest = new SignatureRequestSendReusableFormRequest
             {
                 TestMode = 1,
-                ReusableFormId = "d95e188615fae3fab2fd717ed1190d42083b81f1",
+                ReusableFormId = "",
                 Title = "Test Title",
                 Subject = "Test Subject",
                 Message = "Test Message",
                 Signers = new Dictionary<string, SignatureRequestSignerRequest>()
                 {
-                    { "Test", new SignatureRequestSignerRequest { Name = "Ross Stovall", EmailAddress = "ross@realcrowd.com" } },
-                    { "Test 2", new SignatureRequestSignerRequest { Name = "Ross Stovall", EmailAddress = "rossco@gmail.com" } }
+                    { "Test", new SignatureRequestSignerRequest { Name = "", EmailAddress = "" } },
+                    { "Test 2", new SignatureRequestSignerRequest { Name = "", EmailAddress = "" } }
                 }
             };
 
@@ -109,11 +109,11 @@ namespace RealCrowd.HelloSign.Tests.Integration
         [TestMethod]
         public async Task FinalCopySignautreRequestTest()
         {
-            string signatureRequestId = "9556db0a06f1f7e8227820561f6a57652bb64c96";
+            string signatureRequestId = "";
 
             Func<Stream, Task> onStreamAvailable = async (outputStream) =>
             {
-                string filePath = @"C:\test\test.pdf";
+                string filePath = @"";
                 byte[] buffer = new byte[32768];
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
                 {
