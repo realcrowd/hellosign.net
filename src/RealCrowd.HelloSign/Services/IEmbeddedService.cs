@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RealCrowd.HelloSign.Services
+namespace RealCrowd.HelloSign.Clients
 {
     public interface IEmbeddedService
     {
