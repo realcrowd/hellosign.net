@@ -59,6 +59,7 @@ namespace RealCrowd.HelloSign
                         List = new Endpoint { Method = "GET", Url = "/signature_request/list" },
                         Remind = new Endpoint { Method = "POST", Url = "/signature_request/remind/{signature_request_id}" },
                         Send = new Endpoint { Method = "POST", Url = "/signature_request/send" },
+                        SendFormWithTemplate = new Endpoint { Method = "POST", Url = "/signature_request/send_with_template" },
                         SendForm = new Endpoint { Method = "POST", Url = "/signature_request/send_with_reusable_form" }
                     },
                     Team = new TeamEndpoints
@@ -141,6 +142,8 @@ namespace RealCrowd.HelloSign
         public Endpoint Cancel { get; set; }
         [JsonProperty("sendForm")]
         public Endpoint SendForm { get; set; }
+        [JsonProperty("sendFormWithTemplate")]
+        public Endpoint SendFormWithTemplate { get; set; }
         [JsonProperty("createEmbeddedWithReusableForm")]
         public Endpoint CreateEmbeddedWithReusableForm { get; set; }
         [JsonProperty("createEmbedded")]

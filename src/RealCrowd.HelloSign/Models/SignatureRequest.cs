@@ -260,6 +260,64 @@ namespace RealCrowd.HelloSign.Models
             return data;
         }
     }
+
+    public class SignatureRequestFromTemplateRequest : IHelloSignRequest
+    {
+        public int? TestMode { get; set; }
+        public string TemplateId { get; set; }
+        public string Title { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        public string SigningRedirectUrl { get; set; }
+        public IDictionary<string, string> Ccs { get; set; }
+        public IDictionary<string, SignatureRequestSignerRequest> Signers { get; set; }
+        public IDictionary<string, string> CustomFields { get; set; }
+
+        public IDictionary<string, object> ToRequestParams()
+        {
+            Dictionary<string, object> data = new Dictionary<string, object>();
+
+            if (TestMode.HasValue)
+                data.Add("test_mode", TestMode.Value);
+
+            data.Add("template_id", TemplateId);
+            if (!string.IsNullOrEmpty(Title))
+                data.Add("title", Title);
+
+            if (!string.IsNullOrEmpty(Subject))
+                data.Add("subject", Subject);
+
+            if (!string.IsNullOrEmpty(Message))
+                data.Add("message", Message);
+
+            if (!string.IsNullOrEmpty(SigningRedirectUrl))
+                data.Add("signing_redirect_url", SigningRedirectUrl);
+
+            foreach (KeyValuePair<string, SignatureRequestSignerRequest> signer in Signers)
+            {
+                data.Add("signers[" + signer.Key + "][name]", signer.Value.Name);
+                data.Add("signers[" + signer.Key + "][email_address]", signer.Value.EmailAddress);
+            }
+
+            if (Ccs != null)
+            {
+                foreach (KeyValuePair<string, string> cc in Ccs)
+                {
+                    data.Add("ccs[" + cc.Key + "][email_address]", cc.Value);
+                }
+            }
+
+            if (CustomFields != null)
+            {
+                foreach (KeyValuePair<string, string> customField in CustomFields)
+                {
+                    data.Add("custom_fields[" + customField.Key + "]", customField.Value);
+                }
+            }
+
+            return data;
+        }
+    }
     public class EmbeddedSignatureFromTemplateRequest : IHelloSignRequest
     {
         public int? TestMode { get; set; }
