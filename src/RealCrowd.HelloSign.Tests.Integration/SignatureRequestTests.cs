@@ -84,8 +84,8 @@ namespace RealCrowd.HelloSign.Tests.Integration
                 Message = "Test Message",
                 Signers = new Dictionary<string, SignatureRequestSignerRequest>()
                 {
-                    { "Test", new SignatureRequestSignerRequest { Name = "", EmailAddress = "" } },
-                    { "Test 2", new SignatureRequestSignerRequest { Name = "", EmailAddress = "" } }
+                    { "Test", new SignatureRequestSignerRequest { Name = "Bob", EmailAddress = "test@test.com" } },
+                    { "Test 2", new SignatureRequestSignerRequest { Name = "Mary", EmailAddress = "test2@test.com" } }
                 }
             };
 

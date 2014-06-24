@@ -112,5 +112,12 @@ namespace RealCrowd.HelloSign.Clients
                 settings.HelloSignSettings.Endpoints.SignatureRequest.CreateEmbedded,
                 request);
         }
+        public async Task<SignatureRequest> CreateEmbeddedWithTemplateAsync(EmbeddedSignatureFromTemplateRequest request)
+        {
+            var signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.CreateEmbeddedWithTemplate,
+                 request);
+            return signatureRequestWrapper.SignatureRequest;
+        }
     }
 }
