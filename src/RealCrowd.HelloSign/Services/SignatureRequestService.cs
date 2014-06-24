@@ -61,6 +61,14 @@ namespace RealCrowd.HelloSign.Clients
 
             return signatureRequestWrapper.SignatureRequest;
         }
+        public async Task<SignatureRequest> SendWithTemplateAsync(SignatureRequestFromTemplateRequest request)
+        {
+            SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.SendFormWithTemplate,
+                request);
+
+            return signatureRequestWrapper.SignatureRequest;
+        }
 
         public async Task<SignatureRequest> RemindAsync(string signatureRequestId, string emailAddress)
         {

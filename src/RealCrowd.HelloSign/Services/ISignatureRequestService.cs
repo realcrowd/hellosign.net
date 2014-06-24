@@ -20,6 +20,7 @@ namespace RealCrowd.HelloSign.Clients
         Task<SignatureRequest> SendAsync(SignatureRequestSendRequest sendRequest);
         [Obsolete]
         Task<SignatureRequest> SendWithReusableFormAsync(SignatureRequestSendReusableFormRequest sendRequest);
+        Task<SignatureRequest> SendWithTemplateAsync(SignatureRequestFromTemplateRequest sendRequest);
         Task<SignatureRequest> RemindAsync(string signatureRequestId, string emailAddress);
         Task<SignatureRequest> RemindAsync(SignatureRequestRemindRequest request);
         Task<bool> CancelAsync(string signatureRequestId);

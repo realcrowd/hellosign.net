@@ -95,6 +95,29 @@ namespace RealCrowd.HelloSign.Tests.Integration
             Assert.IsTrue(signatureRequest.Subject == sendRequest.Subject);
             Assert.IsTrue(signatureRequest.Message == sendRequest.Message);
         }
+        [TestMethod]
+        public async Task SendWithTemplateTest()
+        {
+            var sendRequest = new SignatureRequestFromTemplateRequest
+            {
+                TestMode = 1,
+                TemplateId = Config.TemplateId1,
+                Title = "Test Title",
+                Subject = "Test Subject",
+                Message = "Test Message",
+                Signers = new Dictionary<string, SignatureRequestSignerRequest>()
+                {
+                    { "Investor", new SignatureRequestSignerRequest { Name = "Bob", EmailAddress = "test@test.com" } }
+                },
+                CustomFields = new Dictionary<string, string> { { "InvestorName", "Bob" } }
+            };
+
+            SignatureRequest signatureRequest = await client.SignatureRequest.SendWithTemplateAsync(sendRequest);
+
+            Assert.IsTrue(signatureRequest.Title == sendRequest.Title);
+            Assert.IsTrue(signatureRequest.Subject == sendRequest.Subject);
+            Assert.IsTrue(signatureRequest.Message == sendRequest.Message);
+        }
 
         public async Task RemindSignatureRequestTest()
         {
