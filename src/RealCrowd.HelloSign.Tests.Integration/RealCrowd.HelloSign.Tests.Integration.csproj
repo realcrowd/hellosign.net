@@ -58,6 +58,7 @@
     <Compile Include="SignatureRequestTests.cs" />
     <Compile Include="TeamTests.cs" />
     <Compile Include="UnclaimedDraftTests.cs" />
+    <Compile Include="EmbedTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RealCrowd.HelloSign\RealCrowd.HelloSign.csproj">

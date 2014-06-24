@@ -53,6 +53,7 @@ namespace RealCrowd.HelloSign
                         Cancel = new Endpoint { Method = "POST", Url = "/signature_request/cancel/{signature_request_id}" },
                         CreateEmbedded = new Endpoint { Method = "POST", Url = "/signature_request/create_embedded" },
                         CreateEmbeddedWithReusableForm = new Endpoint { Method = "POST", Url = "/signature_request/create_embedded_with_reusable_form" },
+                        CreateEmbeddedWithTemplate = new Endpoint { Method = "POST", Url = "/signature_request/create_embedded_with_template" },
                         Get = new Endpoint { Method = "GET", Url = "/signature_request/{signature_request_id}" },
                         GetFinalCopy = new Endpoint { Method = "GET", Url = "/signature_request/final_copy/{signature_request_id}", ContentType = "application/pdf" },
                         List = new Endpoint { Method = "GET", Url = "/signature_request/list" },
@@ -144,6 +145,8 @@ namespace RealCrowd.HelloSign
         public Endpoint CreateEmbeddedWithReusableForm { get; set; }
         [JsonProperty("createEmbedded")]
         public Endpoint CreateEmbedded { get; set; }
+        [JsonProperty("createEmbeddedWithTemplate")]
+        public Endpoint CreateEmbeddedWithTemplate { get; set; }
     }
 
     public class TeamEndpoints

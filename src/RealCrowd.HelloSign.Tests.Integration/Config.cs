@@ -12,5 +12,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
     {
         public static string Username { get { return Environment.GetEnvironmentVariable("HELLOSIGN_USERNAME", EnvironmentVariableTarget.User); } }
         public static string Password { get { return Environment.GetEnvironmentVariable("HELLOSIGN_PASSWORD", EnvironmentVariableTarget.User); } }
+        public static string ClientId { get { return Environment.GetEnvironmentVariable("HELLOSIGN_CLIENT_ID", EnvironmentVariableTarget.User); } }
+        public static string TemplateId1 { get { return Environment.GetEnvironmentVariable("HELLOSIGN_TEMPLATE_ID_1", EnvironmentVariableTarget.User); } }
     }
 }

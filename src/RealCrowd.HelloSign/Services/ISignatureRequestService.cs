@@ -25,7 +25,10 @@ namespace RealCrowd.HelloSign.Clients
         Task<bool> CancelAsync(SignatureRequestCancelRequest request);
         Task FinalCopyAsync(string signatureRequestId, Func<Stream, Task> onStreamAvailable);
         Task FinalCopyAsync(SignatureRequestFinalCopyRequest request);
+
+        [Obsolete]
         Task<List<SignatureRequest>> CreateEmbeddedWithReusableFormAsync(SignatureRequestSendReusableFormRequest request);
         Task<List<SignatureRequest>> CreateEmbeddedAsync(SignatureRequestSendRequest request);
+        Task<SignatureRequest> CreateEmbeddedWithTemplateAsync(EmbeddedSignatureFromTemplateRequest request);
     }
 }
