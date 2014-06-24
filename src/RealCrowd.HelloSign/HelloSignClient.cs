@@ -61,6 +61,11 @@ namespace RealCrowd.HelloSign
                 .Bind<IUnclaimedDraftService>()
                 .To<UnclaimedDraftService>()
                 .InSingletonScope();
+
+            kernel
+                .Bind<IEmbeddedService>()
+                .To<EmbeddedService>()
+                .InSingletonScope();
         }
 
         private IAccountService account;
@@ -115,6 +120,16 @@ namespace RealCrowd.HelloSign
                 if (unclaimedDraft == null)
                     unclaimedDraft = kernel.Get<IUnclaimedDraftService>();
                 return unclaimedDraft;
+            }
+        }
+        private IEmbeddedService embeddedService;
+        public IEmbeddedService EmbeddedService
+        {
+            get
+            {
+                if (embeddedService == null)
+                    embeddedService = kernel.Get<IEmbeddedService>();
+                return embeddedService;
             }
         }
     }
