@@ -49,6 +49,10 @@ namespace RealCrowd.HelloSign.Models
 
     public class Document
     {
+        [JsonProperty("name")]
+        public string Name { get; internal set; }
+        [JsonProperty("index")]
+        public int Index { get; internal set; }
         [JsonProperty("form_fields")]
         public IList<FormField> FormFields { get; internal set; }
         [JsonProperty("custom_fields")]

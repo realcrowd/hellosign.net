@@ -1,14 +1,6 @@
 ﻿// Copyright (c) RealCrowd, Inc. All rights reserved. See LICENSE in the project root for license information.
-
 using RealCrowd.HelloSign.Clients;
-using Newtonsoft.Json;
 using Ninject;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign
 {
@@ -66,6 +58,11 @@ namespace RealCrowd.HelloSign
                 .Bind<IEmbeddedService>()
                 .To<EmbeddedService>()
                 .InSingletonScope();
+
+            kernel
+               .Bind<ITemplateService>()
+               .To<TemplateService>()
+               .InSingletonScope();
         }
 
         private IAccountService account;
@@ -109,6 +106,16 @@ namespace RealCrowd.HelloSign
                 if (team == null)
                     team = kernel.Get<ITeamService>();
                 return team;
+            }
+        }
+        private ITemplateService template;
+        public ITemplateService Template
+        {
+            get
+            {
+                if (template == null)
+                    template = kernel.Get<ITemplateService>();
+                return template;
             }
         }
 
