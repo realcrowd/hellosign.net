@@ -49,6 +49,8 @@
     <Compile Include="Models\Embedded.cs" />
     <Compile Include="Models\HelloSignCallback.cs" />
     <Compile Include="Models\IHelloSignStreamRequest.cs" />
+    <Compile Include="Models\Template.cs" />
+    <Compile Include="Services\TemplateService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\EmbeddedService.cs" />
     <Compile Include="Services\IAccountService.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="Services\IReusableFormService.cs" />
     <Compile Include="Services\ISignatureRequestService.cs" />
     <Compile Include="Services\ITeamService.cs" />
+    <Compile Include="Services\ITemplateService.cs" />
     <Compile Include="Services\IUnclaimedDraftService.cs" />
     <Compile Include="Services\ReusableFormService.cs" />
     <Compile Include="Services\SignatureRequestService.cs" />

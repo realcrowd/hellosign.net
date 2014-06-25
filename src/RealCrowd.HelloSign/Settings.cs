@@ -1,12 +1,6 @@
 ﻿// Copyright (c) RealCrowd, Inc. All rights reserved. See LICENSE in the project root for license information.
 
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign
 {
@@ -71,6 +65,11 @@ namespace RealCrowd.HelloSign
                         RemoveMember = new Endpoint { Method = "POST", Url = "/team/remove_member" },
                         Update = new Endpoint { Method = "POST", Url = "/team" }
                     },
+                    Template = new TemplateEndpoints
+                    {
+                        List = new Endpoint(){Method ="GET", Url="/template/list"},
+                        Get = new Endpoint(){Method = "GET", Url = "/template/{template_id}"}
+                    },
                     UnclaimedDraft = new UnclaimedDraftEndpoints
                     {
                         Create = new Endpoint { Method = "POST", Url = "/unclaimed_draft/create" }
@@ -80,6 +79,7 @@ namespace RealCrowd.HelloSign
         }
     }
 
+    
     public class HelloSignSettings
     {
         [JsonProperty("baseUrl")]
@@ -102,6 +102,8 @@ namespace RealCrowd.HelloSign
         public UnclaimedDraftEndpoints UnclaimedDraft { get; set; }
         [JsonProperty("embedded")]
         public EmbeddedEndpoints Embedded { get; set; }
+        [JsonProperty("template")]
+        public TemplateEndpoints Template { get; set; }
     }
 
     public class AccountEndpoints
@@ -166,6 +168,13 @@ namespace RealCrowd.HelloSign
         public Endpoint AddMember { get; set; }
         [JsonProperty("removeMember")]
         public Endpoint RemoveMember { get; set; }
+    }
+    public class TemplateEndpoints
+    {
+        [JsonProperty("list")]
+        public Endpoint List { get; set; }
+        [JsonProperty("get")]
+        public Endpoint Get { get; set; }
     }
 
     public class UnclaimedDraftEndpoints
