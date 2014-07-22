@@ -8,6 +8,10 @@ namespace RealCrowd.HelloSign
     {
         private IKernel kernel;
 
+        public HelloSignClient(string apiKey)
+            : this(apiKey, string.Empty)
+        { }
+
         public HelloSignClient(string username, string password)
         {
             LoadDependencies(username, password);
@@ -129,14 +133,14 @@ namespace RealCrowd.HelloSign
                 return unclaimedDraft;
             }
         }
-        private IEmbeddedService embeddedService;
-        public IEmbeddedService EmbeddedService
+        private IEmbeddedService embedded;
+        public IEmbeddedService Embedded
         {
             get
             {
-                if (embeddedService == null)
-                    embeddedService = kernel.Get<IEmbeddedService>();
-                return embeddedService;
+                if (embedded == null)
+                    embedded = kernel.Get<IEmbeddedService>();
+                return embedded;
             }
         }
     }
