@@ -50,7 +50,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
             Assert.AreEqual(signatureResponse.Signatures.Count, 1);
 
             var signatureUrlResponse =
-                await client.EmbeddedService.GetSignUrlAsync(signatureResponse.Signatures.First().SignatureId);
+                await client.Embedded.GetSignUrlAsync(signatureResponse.Signatures.First().SignatureId);
             Assert.IsFalse(string.IsNullOrWhiteSpace(signatureUrlResponse.SignUrl));
         }
     }
