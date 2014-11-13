@@ -67,7 +67,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
         }
 
         [TestMethod]
-        public async Task GetSignatureRequestTest()
+        public void GetSignatureRequestTest()
         {
 
         }
@@ -119,12 +119,12 @@ namespace RealCrowd.HelloSign.Tests.Integration
             Assert.IsTrue(signatureRequest.Message == sendRequest.Message);
         }
 
-        public async Task RemindSignatureRequestTest()
+        public void RemindSignatureRequestTest()
         {
             
         }
 
-        public async Task CancelSignatureRequestTest()
+        public void CancelSignatureRequestTest()
         {
 
         }

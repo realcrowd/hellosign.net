@@ -28,31 +28,31 @@ namespace RealCrowd.HelloSign.Tests.Integration
         }
 
         [TestMethod]
-        public async Task CreateTeamTest()
+        public void CreateTeamTest()
         {
 
         }
 
         [TestMethod]
-        public async Task UpdateTeamTest()
+        public void UpdateTeamTest()
         {
 
         }
 
         [TestMethod]
-        public async Task DestoryTeamTest()
+        public void DestoryTeamTest()
         {
 
         }
 
         [TestMethod]
-        public async Task AddMemberTest()
+        public void AddMemberTest()
         {
 
         }
 
         [TestMethod]
-        public async Task RemoveMemberTest()
+        public void RemoveMemberTest()
         {
 
         }
