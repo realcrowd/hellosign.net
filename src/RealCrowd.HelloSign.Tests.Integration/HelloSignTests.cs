@@ -12,7 +12,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
     public class helloSignServiceTests
     {
         [TestMethod]
-        public async Task InitalizeApiTest()
+        public void InitalizeApiTest()
         {
 
         }

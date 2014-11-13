@@ -48,7 +48,7 @@ namespace RealCrowd.HelloSign.Clients
                 request != null ? request : new SignatureRequestListRequest());
         }
 
-        public async Task<SignatureRequest> SendAsync(SignatureRequestSendRequest request)
+        public Task<SignatureRequest> SendAsync(SignatureRequestSendRequest request)
         {
             throw new NotImplementedException();
         }

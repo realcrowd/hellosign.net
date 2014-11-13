@@ -18,7 +18,7 @@ namespace RealCrowd.HelloSign.Tests.Integration
         }
 
         [TestMethod]
-        public async Task CreateUnclaimedDraftTest()
+        public void CreateUnclaimedDraftTest()
         {
 
         }

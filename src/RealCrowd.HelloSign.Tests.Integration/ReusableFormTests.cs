@@ -27,19 +27,19 @@ namespace RealCrowd.HelloSign.Tests.Integration
         }
 
         [TestMethod]
-        public async Task GetReusableFormTest()
+        public void GetReusableFormTest()
         {
 
         }
 
         [TestMethod]
-        public async Task AddUserToReusableFormTest()
+        public void AddUserToReusableFormTest()
         {
 
         }
 
         [TestMethod]
-        public async Task RemoveUserFromReusableFormTest()
+        public void RemoveUserFromReusableFormTest()
         {
 
         }
