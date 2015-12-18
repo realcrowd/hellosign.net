@@ -64,6 +64,8 @@ namespace RealCrowd.HelloSign.Models
         public string ApiId { get; internal set; }
         [JsonProperty("signature_id")]
         public string SignatureId { get; internal set; }
+        [JsonProperty("name")]
+        public string Name { get; internal set; }
         [JsonProperty("value")]
         public string Value { get; internal set; }
         [JsonProperty("type")]
