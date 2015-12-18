@@ -60,8 +60,10 @@ namespace RealCrowd.HelloSign.Models
 
     public class ResponseData
     {
-        [JsonProperty("name")]
-        public string Name { get; internal set; }
+        [JsonProperty("api_id")]
+        public string ApiId { get; internal set; }
+        [JsonProperty("signature_id")]
+        public string SignatureId { get; internal set; }
         [JsonProperty("value")]
         public string Value { get; internal set; }
         [JsonProperty("type")]
@@ -86,6 +88,8 @@ namespace RealCrowd.HelloSign.Models
         public long? LastViewedAt { get; internal set; }
         [JsonProperty("last_reminded_at")]
         public long? LastRemindedAt { get; internal set; }
+        [JsonProperty("has_pin")]
+        public bool HasPin { get; internal set; }
     }
 
     public class SignatureRequestList

@@ -3,18 +3,17 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign.Models
 {
+    [Obsolete]
     internal class ReusableFormWrapper
     {
         [JsonProperty("reusable_form")]
         public ReusableForm ReusableForm { get; set; }
     }
 
+    [Obsolete]
     public class ReusableForm
     {
         [JsonProperty("reusable_form_id")]
@@ -33,50 +32,7 @@ namespace RealCrowd.HelloSign.Models
         public IList<AccountCondensed> Accounts { get; internal set; }
     }
 
-    public class SignerRole
-    {
-        [JsonProperty("name")]
-        public string Name { get; internal set; }
-        [JsonProperty("order")]
-        public int? Order { get; internal set; }
-    }
-
-    public class CcRole
-    {
-        [JsonProperty("name")]
-        public string Name { get; internal set; }
-    }
-
-    public class Document
-    {
-        [JsonProperty("name")]
-        public string Name { get; internal set; }
-        [JsonProperty("index")]
-        public int Index { get; internal set; }
-        [JsonProperty("form_fields")]
-        public IList<FormField> FormFields { get; internal set; }
-        [JsonProperty("custom_fields")]
-        public IList<CustomField> CustomFields { get; internal set; }
-    }
-
-    public class FormField
-    {
-        [JsonProperty("name")]
-        public string Name { get; internal set; }
-        [JsonProperty("type")]
-        public string Type { get; internal set; }
-        [JsonProperty("x")]
-        public double X { get; internal set; }
-        [JsonProperty("y")]
-        public double Y { get; internal set; }
-        [JsonProperty("width")]
-        public int Width { get; internal set; }
-        [JsonProperty("height")]
-        public int Height { get; internal set; }
-        [JsonProperty("required")]
-        public bool Required { get; internal set; }
-    }
-
+    [Obsolete]
     public class ReusableFormList
     {
         [JsonProperty("list_info")]
@@ -85,6 +41,7 @@ namespace RealCrowd.HelloSign.Models
         public IList<ReusableForm> ReusableForms { get; internal set; }
     }
 
+    [Obsolete]
     public class ReusableFormGetRequest : IHelloSignRequest
     {
         public string ReusableFormId { get; set; }
@@ -98,6 +55,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Obsolete]
     public class ReusableFormListRequest : IHelloSignRequest
     {
         public int? Page { get; set; }
@@ -116,6 +74,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Obsolete]
     public class ReusableFormAddUserRequest : IHelloSignRequest
     {
         public string ReusableFormId { get; set; }
@@ -138,6 +97,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Obsolete]
     public class ReusableFormRemoveUserRequest : IHelloSignRequest
     {
         public string ReusableFormId { get; set; }

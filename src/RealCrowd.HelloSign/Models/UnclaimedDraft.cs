@@ -19,6 +19,10 @@ namespace RealCrowd.HelloSign.Models
     {
         [JsonProperty("claim_url")]
         public string ClaimUrl { get; internal set; }
+        [JsonProperty("signing_redirect_url")]
+        public string SigningRedirectUrl { get; internal set; }
+        [JsonProperty("expires_at")]
+        public long ExpiresAt { get; internal set; }
         [JsonProperty("test_mode")]
         public string TestMode { get; internal set; }
     }

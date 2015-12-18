@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\CustomField.cs" />
     <Compile Include="Models\Embedded.cs" />
     <Compile Include="Models\HelloSignCallback.cs" />
     <Compile Include="Models\IHelloSignStreamRequest.cs" />
@@ -70,7 +72,7 @@
     <Compile Include="Services\IHelloSignService.cs" />
     <Compile Include="ISettings.cs" />
     <Compile Include="Models\Account.cs" />
-    <Compile Include="Models\CustomField.cs" />
+    <Compile Include="Models\CustomFieldTemplate.cs" />
     <Compile Include="Models\IHelloSignRequest.cs" />
     <Compile Include="Models\ListInfo.cs" />
     <Compile Include="Models\ReusableForm.cs" />
