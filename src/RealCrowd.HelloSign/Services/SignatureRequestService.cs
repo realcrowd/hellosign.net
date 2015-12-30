@@ -1,14 +1,10 @@
 ﻿// Copyright (c) RealCrowd, Inc. All rights reserved. See LICENSE in the project root for license information.
 
 using RealCrowd.HelloSign.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System.Net;
 
 namespace RealCrowd.HelloSign.Clients
 {
@@ -41,6 +37,16 @@ namespace RealCrowd.HelloSign.Clients
             return await ListAsync(new SignatureRequestListRequest { Page = page });
         }
 
+        public Task<SignatureRequestList> ListAsync(int? page, int? pageSize, string accountId, string query = null)
+        {
+            return ListAsync(new SignatureRequestListRequest {
+                Page = page,
+                PageSize = pageSize,
+                AccountId = accountId,
+                Query = query
+            });
+        }
+
         public async Task<SignatureRequestList> ListAsync(SignatureRequestListRequest request = null)
         {
             return await helloSignService.MakeRequestAsync<SignatureRequestList>(
@@ -48,23 +54,19 @@ namespace RealCrowd.HelloSign.Clients
                 request != null ? request : new SignatureRequestListRequest());
         }
 
-        public Task<SignatureRequest> SendAsync(SignatureRequestSendRequest request)
+        public async Task<SignatureRequest> SendAsync(SignatureRequestSendRequest request)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<SignatureRequest> SendWithReusableFormAsync(SignatureRequestSendReusableFormRequest request)
-        {
-            SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
-                settings.HelloSignSettings.Endpoints.SignatureRequest.SendForm,
+            SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestWithFilesAsync<SignatureRequestWrapper>(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.Send,
                 request);
 
             return signatureRequestWrapper.SignatureRequest;
         }
+
         public async Task<SignatureRequest> SendWithTemplateAsync(SignatureRequestFromTemplateRequest request)
         {
             SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
-                settings.HelloSignSettings.Endpoints.SignatureRequest.SendFormWithTemplate,
+                settings.HelloSignSettings.Endpoints.SignatureRequest.SendWithTemplate,
                 request);
 
             return signatureRequestWrapper.SignatureRequest;
@@ -96,17 +98,60 @@ namespace RealCrowd.HelloSign.Clients
             return true;
         }
 
-        public async Task FinalCopyAsync(string signatureRequestId, Func<Stream, Task> onStreamAvailable)
+        public async Task GetFilesAsync(string signatureRequestId, string fileType, Func<FileResponse, Task> onStreamAvailable)
+        {
+            await GetFilesAsync(new SignatureRequestGetFilesCallbackRequest(onStreamAvailable) { SignatureRequestId = signatureRequestId, FileType = fileType });
+        }
+
+        public async Task GetFilesAsync(SignatureRequestGetFilesCallbackRequest request)
+        {
+            await helloSignService.MakeStreamCallbackRequestAsync(settings.HelloSignSettings.Endpoints.SignatureRequest.GetFiles,
+                request);
+        }
+
+        public Task<FileResponse> GetFilesAsync(string signatureRequestId, string fileType)
+        {
+            return GetFilesAsync(new SignatureRequestGetFilesRequest
+            {
+                SignatureRequestId = signatureRequestId,
+                FileType = fileType
+            });
+        }
+
+        public Task<FileResponse> GetFilesAsync(SignatureRequestGetFilesRequest request)
+        {
+            return helloSignService.MakeStreamRequestAsync(settings.HelloSignSettings.Endpoints.SignatureRequest.GetFiles,
+                request);
+        }
+
+        public async Task<List<SignatureRequest>> SendEmbeddedAsync(SignatureRequestSendRequest request)
+        {
+            return await helloSignService.MakeRequestAsync<List<SignatureRequest>>(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.SendEmbedded,
+                request);
+        }
+        public async Task<SignatureRequest> SendEmbeddedWithTemplateAsync(EmbeddedSignatureFromTemplateRequest request)
+        {
+            var signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.SendEmbeddedWithTemplate,
+                 request);
+            return signatureRequestWrapper.SignatureRequest;
+        }
+
+        [Obsolete("Use GetFiles")]
+        public async Task FinalCopyAsync(string signatureRequestId, Func<FileResponse, Task> onStreamAvailable)
         {
             await FinalCopyAsync(new SignatureRequestFinalCopyRequest(onStreamAvailable) { SignatureRequestId = signatureRequestId });
         }
 
+        [Obsolete("Use GetFiles")]
         public async Task FinalCopyAsync(SignatureRequestFinalCopyRequest request)
         {
-            await helloSignService.MakeStreamRequestAsync(settings.HelloSignSettings.Endpoints.SignatureRequest.GetFinalCopy,
+            await helloSignService.MakeStreamCallbackRequestAsync(settings.HelloSignSettings.Endpoints.SignatureRequest.GetFinalCopy,
                 request);
         }
 
+        [Obsolete("Use SendEmbeddedWithTemplate")]
         public async Task<List<SignatureRequest>> CreateEmbeddedWithReusableFormAsync(SignatureRequestSendReusableFormRequest request)
         {
             return await helloSignService.MakeRequestAsync<List<SignatureRequest>>(
@@ -114,17 +159,13 @@ namespace RealCrowd.HelloSign.Clients
                 request);
         }
 
-        public async Task<List<SignatureRequest>> CreateEmbeddedAsync(SignatureRequestSendRequest request)
+        [Obsolete("Use SendWithTemplate")]
+        public async Task<SignatureRequest> SendWithReusableFormAsync(SignatureRequestSendReusableFormRequest request)
         {
-            return await helloSignService.MakeRequestAsync<List<SignatureRequest>>(
-                settings.HelloSignSettings.Endpoints.SignatureRequest.CreateEmbedded,
+            SignatureRequestWrapper signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.SendForm,
                 request);
-        }
-        public async Task<SignatureRequest> CreateEmbeddedWithTemplateAsync(EmbeddedSignatureFromTemplateRequest request)
-        {
-            var signatureRequestWrapper = await helloSignService.MakeRequestAsync<SignatureRequestWrapper>(
-                settings.HelloSignSettings.Endpoints.SignatureRequest.CreateEmbeddedWithTemplate,
-                 request);
+
             return signatureRequestWrapper.SignatureRequest;
         }
     }

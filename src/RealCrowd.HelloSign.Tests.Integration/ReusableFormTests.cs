@@ -16,7 +16,14 @@ namespace RealCrowd.HelloSign.Tests.Integration
         [TestInitialize]
         public void Init()
         {
-            client = new HelloSignClient(Config.Username, Config.Password);
+            if (!string.IsNullOrEmpty(Config.ApiKey))
+            {
+                client = new HelloSignClient(Config.ApiKey);
+            }
+            else
+            {
+                client = new HelloSignClient(Config.Username, Config.Password);
+            }
         }
 
         [TestMethod]

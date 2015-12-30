@@ -5,6 +5,6 @@ namespace RealCrowd.HelloSign.Models
     public class CustomField : CustomFieldTemplate
     {
         [JsonProperty("value")]
-        public string Value { get; internal set; }
+        public object Value { get; internal set; }
     }
 }

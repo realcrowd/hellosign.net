@@ -7,9 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+//using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Web;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 
 namespace RealCrowd.HelloSign
@@ -19,102 +22,164 @@ namespace RealCrowd.HelloSign
         private ISettings settings;
         private string username;
         private string password;
+        private HttpClient httpClient = new HttpClient();
+        
 
         public HelloSignService(ISettings settings, string username, string password)
         {
             this.settings = settings;
             this.username = username;
             this.password = password;
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Basic",
+                    Convert.ToBase64String(GetAsciiBytes(string.Format("{0}:{1}", username, password))));
         }
 
         public async Task<T> MakeRequestAsync<T>(Endpoint endpoint, IHelloSignRequest request = null)
         {
-            Tuple<string, string> endpointUrlAndParams = BuildEndpointUrlAndParams(endpoint, request);
+            var endpointUrlAndParams = BuildEndpointUrlAndParams(endpoint, request);
             string endpointUrl = endpointUrlAndParams.Item1;
-            string dataString = endpointUrlAndParams.Item2;
+            var encodedData = endpointUrlAndParams.Item2;
 
             switch (endpoint.Method)
             {
                 case "GET":
-                    return await MakeGetRequestAsync<T>(endpointUrl, dataString);
+                    return await MakeGetRequestAsync<T>(endpointUrl, encodedData);
                 case "POST":
-                    return await MakePostRequestAsync<T>(endpointUrl, dataString);
+                    return await MakePostRequestAsync<T>(endpointUrl, encodedData);
                 default:
                     throw new Exception("Method not defined properly for endpoint: " + endpoint.Url);
             }
         }
 
-        public async Task MakeStreamRequestAsync(Endpoint endpoint, IHelloSignStreamRequest request)
+
+        public async Task<T> MakeRequestWithFilesAsync<T>(Endpoint endpoint, IHelloSignRequestWithFiles requestWithFiles)
         {
-            Tuple<string, string> endpointUrlAndParams = BuildEndpointUrlAndParams(endpoint, request);
+            var endpointUrlAndParams = BuildEndpointUrlAndParams(endpoint, requestWithFiles);
             string endpointUrl = endpointUrlAndParams.Item1;
-            string data = endpointUrlAndParams.Item2;
+            var encodedData = endpointUrlAndParams.Item2;
+            var fileRequests = endpointUrlAndParams.Item3;
+
+            switch (endpoint.Method)
+            {
+                case "GET":
+                    return await MakeGetRequestAsync<T>(endpointUrl, encodedData);
+                case "POST":
+                    return await MakePostRequestWithFilesAsync<T>(endpointUrl, encodedData, fileRequests);
+                default:
+                    throw new Exception("Method not defined properly for endpoint: " + endpoint.Url);
+            }
+        }
+
+        public static byte[] GetAsciiBytes(string s)
+        {
+            var retval = new byte[s.Length];
+            for (int ix = 0; ix < s.Length; ++ix)
+            {
+                char ch = s[ix];
+                if (ch <= 0x7f) retval[ix] = (byte)ch;
+                else retval[ix] = (byte)'?';
+            }
+            return retval;
+        }
+
+        public async Task MakeStreamCallbackRequestAsync(Endpoint endpoint, IHelloSignStreamCallbackRequest request)
+        {
+            var endpointUrlAndParams = BuildEndpointUrlAndParams(endpoint, request);
+            string endpointUrl = endpointUrlAndParams.Item1;
+            var encodedData = endpointUrlAndParams.Item2;
 
             string url = settings.HelloSignSettings.BaseUrl + endpointUrl;
 
-            if (!string.IsNullOrEmpty(data))
-                url += "?" + data;
+            var query = ToQueryString(encodedData);
+            if (!string.IsNullOrEmpty(query))
+                url += "?" + query;
 
-            var webReq = (HttpWebRequest)WebRequest.Create(url);
-            webReq.Credentials = new NetworkCredential(username, password);
-            webReq.ContentType = endpoint.ContentType;
-
-            using (var response = await webReq.GetResponseAsync())
+            using (var response = await httpClient.GetAsync(url))
             {
-                using (var outputStream = response.GetResponseStream())
+                await request.OnStreamAvailable(new FileResponse
                 {
-                    await request.OnStreamAvailable(outputStream);
-                }
+                    Stream = await response.Content.ReadAsStreamAsync(),
+                    FileName = response.Content.Headers.ContentDisposition.FileName
+                });
             }
         }
 
-        private async Task<T> MakeGetRequestAsync<T>(string endpoint, string data)
+        private async Task<T> MakeGetRequestAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, string>> encodedDataEntries)
         {
             string url = settings.HelloSignSettings.BaseUrl + endpoint;
 
-            if (!string.IsNullOrEmpty(data))
-                url += "?" + data;
+            var query = ToQueryString(encodedDataEntries);
+            if (!string.IsNullOrEmpty(query))
+                url += "?" + query;
 
-            var webReq = (HttpWebRequest)WebRequest.Create(url);
-            webReq.Credentials = new NetworkCredential(username, password);
-            using (WebResponse response = await webReq.GetResponseAsync())
+            using (var response = await httpClient.GetAsync(url))
             {
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream);
-                    string responseString = await reader.ReadToEndAsync();
-                    return JsonConvert.DeserializeObject<T>(responseString);
-                }
+                string responseString = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(responseString);
             }
         }
 
-        private async Task<T> MakePostRequestAsync<T>(string endpoint, string data)
+        private async Task<T> MakePostRequestAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, string>> encodedDataEntries)
         {
             string url = settings.HelloSignSettings.BaseUrl + endpoint;
-            var webReq = (HttpWebRequest)WebRequest.Create(url);
-            webReq.Headers["Authorization"] = "Basic " + Convert.ToBase64String(Encoding.Default.GetBytes(username + ":" + password));
-            webReq.Method = "POST";
-            var bytes = Encoding.UTF8.GetBytes(data);
-            webReq.ContentLength = bytes.Length;
-            webReq.ContentType = "application/x-www-form-urlencoded";
-            
-            using (var requestStream = await webReq.GetRequestStreamAsync())
-            {
-                await requestStream.WriteAsync(bytes, 0, bytes.Length);
-            }
 
-            using (WebResponse response = await webReq.GetResponseAsync())
+            using (var response = await httpClient.PostAsync(url, new FormUrlEncodedContent(encodedDataEntries)))
             {
-                using (Stream responseStream = response.GetResponseStream())
-                {
-                    StreamReader reader = new StreamReader(responseStream);
-                    string responseString = await reader.ReadToEndAsync();
-                    return JsonConvert.DeserializeObject<T>(responseString);
-                }
+                string responseString = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(responseString);
             }
         }
 
-        private Tuple<string, string> BuildEndpointUrlAndParams(Endpoint endpoint, IHelloSignRequest request)
+        private async Task<T> MakePostRequestWithFilesAsync<T>(string endpoint, IEnumerable<KeyValuePair<string, string>> encodedDataEntries, IEnumerable<KeyValuePair<string, FileRequest>> fileRequestEntries)
+        {
+            string url = settings.HelloSignSettings.BaseUrl + endpoint;
+
+            var content = new MultipartFormDataContent();
+
+            foreach (var dataEntry in encodedDataEntries)
+            {
+                content.Add(new StringContent(dataEntry.Value), "\"" + dataEntry.Key + "\"");
+            }
+
+            foreach (var fileRequestEntry in fileRequestEntries)
+            {
+                var fsContent = new StreamContent(await fileRequestEntry.Value.GetStreamAsync());
+                fsContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
+                {
+                    Name = "\"" + fileRequestEntry.Key + "\"",
+                    FileName = "\"" + fileRequestEntry.Value.FileName + "\""
+                };
+                fsContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                content.Add(fsContent);
+            }
+
+            using (var response = await httpClient.PostAsync(url, content))
+            {
+                string responseString = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(responseString);
+            }
+        }
+
+        const string PathParameterFormat = "{{{0}}}";
+
+        private string GetStringValue(object value)
+        {
+            if (value is string)
+                return value as string;
+
+            return JsonConvert.SerializeObject(value);
+        }
+
+        private Tuple<string, IEnumerable<KeyValuePair<string, string>>, IEnumerable<KeyValuePair<string, FileRequest>>> BuildEndpointUrlAndParams(Endpoint endpoint, IHelloSignRequestWithFiles withFilesRequest)
+        {
+            var EndpointAndParams = BuildEndpointUrlAndParams(endpoint, (IHelloSignRequest)withFilesRequest);
+
+            return Tuple.Create(EndpointAndParams.Item1, EndpointAndParams.Item2, withFilesRequest.GetFileRequestEntries());
+        }
+
+        private Tuple<string, IEnumerable<KeyValuePair<string, string>>> BuildEndpointUrlAndParams(Endpoint endpoint, IHelloSignRequest request)
         {
             IDictionary<string, object> requestParams = request != null ? request.ToRequestParams() : new Dictionary<string, object>();
             if (requestParams == null)
@@ -122,35 +187,67 @@ namespace RealCrowd.HelloSign
 
             string endpointUrl = endpoint.Url;
 
-            IDictionary<string, object> queryParams = new Dictionary<string, object>();
-            foreach (KeyValuePair<string, object> rParam in requestParams)
+            List<KeyValuePair<string, string>> encodedParams = new List<KeyValuePair<string, string>>();
+
+            foreach (var rParam in requestParams)
             {
-                string stringKey = "{" + rParam.Key + "}";
+                string stringKey = string.Format(PathParameterFormat, rParam.Key);
                 if (endpointUrl.Contains(stringKey))
-                    endpointUrl = endpointUrl.Replace(stringKey, rParam.Value.ToString());
+                    endpointUrl = endpointUrl.Replace(stringKey, GetStringValue(rParam.Value));
                 else
-                    queryParams.Add(rParam);
+                {
+                    if (endpoint.Method == "GET")
+                    {
+                        encodedParams.Add(new KeyValuePair<string, string>(rParam.Key, HttpUtility.UrlEncode(GetStringValue(rParam.Value))));
+                    }
+                    else
+                    {
+                        if (rParam.Key.Contains("file"))
+                        {
+                            encodedParams.Add(new KeyValuePair<string, string>(rParam.Key, GetStringValue(rParam.Value)));
+                        }
+                        else
+                        {
+                            encodedParams.Add(new KeyValuePair<string, string>(rParam.Key, GetStringValue(rParam.Value)));
+                        }
+                    }
+                }
             }
 
-            return new Tuple<string, string>(endpointUrl, BuildParams(queryParams));
+            return new Tuple<string, IEnumerable<KeyValuePair<string, string>>>(endpointUrl, encodedParams);
         }
 
-        private string BuildParams(IDictionary<string, object> data)
+        private static string ToQueryString(IEnumerable<KeyValuePair<string, string>> data, bool encode = false)
         {
-            if (data == null || data.Keys.Count == 0)
-                return string.Empty;
+            return string.Join("&",
+                data.Select(kvp =>
+                    string.Format("{0}={1}", kvp.Key, encode ? HttpUtility.UrlEncode(kvp.Value) : kvp.Value)));
+        }
 
-            StringBuilder sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Keys.Count; i++)
+        public async Task<FileResponse> MakeStreamRequestAsync(Endpoint endpoint, IHelloSignRequest request)
+        {
+            var endpointUrlAndParams = BuildEndpointUrlAndParams(endpoint, request);
+            string endpointUrl = endpointUrlAndParams.Item1;
+            var encodedData = endpointUrlAndParams.Item2;
+
+            string url = settings.HelloSignSettings.BaseUrl + endpointUrl;
+
+            var query = ToQueryString(encodedData);
+            if (!string.IsNullOrEmpty(query))
+                url += "?" + query;
+
+            using (var response = await httpClient.GetAsync(url))
+            using (var stream = await response.Content.ReadAsStreamAsync())
             {
-                string key = data.Keys.ElementAt(i);
-                sBuilder.Append(key);
-                sBuilder.Append("=");
-                sBuilder.Append(HttpUtility.UrlEncode(data[key].ToString()));
-                if (i < data.Keys.Count - 1)
-                    sBuilder.Append("&");
+                var target = new MemoryStream();
+                await stream.CopyToAsync(target, 4096);
+
+                return new FileResponse()
+                {
+                    Stream = target,
+                    FileName = response.Content.Headers.ContentDisposition.FileName
+                };
             }
-            return sBuilder.ToString();
         }
     }
 }

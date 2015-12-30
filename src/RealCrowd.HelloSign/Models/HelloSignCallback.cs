@@ -11,8 +11,24 @@ namespace RealCrowd.HelloSign.Models
     {
         [JsonProperty("event")]
         public HelloSignCallbackEvent Event { get; set; }
+    }
+
+    public class HelloSignSignatureRequestCallback : HelloSignCallback
+    {
         [JsonProperty("signature_request")]
         public SignatureRequest SignatureRequest { get; set; }
+    }
+
+    public class HelloSignTemplateCallback : HelloSignCallback
+    {
+        [JsonProperty("template")]
+        public Template Template { get; set; }
+    }
+
+    public class HelloSignAccountCallback : HelloSignCallback
+    {
+        [JsonProperty("account")]
+        public Account Account { get; set; }
     }
 
     public class HelloSignCallbackEvent

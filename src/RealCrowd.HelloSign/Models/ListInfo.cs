@@ -11,12 +11,24 @@ namespace RealCrowd.HelloSign.Models
 {
     public class ListInfo
     {
+        /// <summary>
+        /// Total number of pages available
+        /// </summary>
         [JsonProperty("num_pages")]
         public int NumPages { get; internal set; }
+        /// <summary>
+        /// Total number of objects available
+        /// </summary>
         [JsonProperty("num_results")]
         public int NumResults { get; internal set; }
+        /// <summary>
+        /// Number of the page being returned
+        /// </summary>
         [JsonProperty("page")]
         public int Page { get; internal set; }
+        /// <summary>
+        /// Objects returned per page
+        /// </summary>
         [JsonProperty("page_size")]
         public int PageSize { get; internal set; }
     }
