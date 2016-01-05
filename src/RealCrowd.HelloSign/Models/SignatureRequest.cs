@@ -709,11 +709,11 @@ namespace RealCrowd.HelloSign.Models
     {
         public string SignatureRequestId { get; set; }
 
-        public Func<FileResponse, Task> OnStreamAvailable { get; set; }
+        public Func<FileResponse, Task> OnResponseStreamAvailable { get; set; }
 
-        public SignatureRequestFinalCopyRequest(Func<FileResponse, Task> onStreamAvailable)
+        public SignatureRequestFinalCopyRequest(Func<FileResponse, Task> onResponseStreamAvailable)
         {
-            OnStreamAvailable = onStreamAvailable;
+            OnResponseStreamAvailable = onResponseStreamAvailable;
         }
 
         public IDictionary<string, object> ToRequestParams()
@@ -746,11 +746,11 @@ namespace RealCrowd.HelloSign.Models
 
     public class SignatureRequestGetFilesCallbackRequest : SignatureRequestGetFilesRequest, IHelloSignStreamCallbackRequest
     {
-        public Func<FileResponse, Task> OnStreamAvailable { get; set; }
+        public Func<FileResponse, Task> OnResponseStreamAvailable { get; set; }
 
-        public SignatureRequestGetFilesCallbackRequest(Func<FileResponse, Task> onStreamAvailable)
+        public SignatureRequestGetFilesCallbackRequest(Func<FileResponse, Task> onResponseSteamAvailable)
         {
-            OnStreamAvailable = onStreamAvailable;
+            OnResponseStreamAvailable = onResponseSteamAvailable;
         }
     }
 }

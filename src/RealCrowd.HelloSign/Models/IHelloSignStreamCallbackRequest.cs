@@ -9,6 +9,6 @@ namespace RealCrowd.HelloSign.Models
 {
     public interface IHelloSignStreamCallbackRequest : IHelloSignRequest
     {
-        Func<FileResponse, Task> OnStreamAvailable { get; set; }
+        Func<FileResponse, Task> OnResponseStreamAvailable { get; set; }
     }
 }

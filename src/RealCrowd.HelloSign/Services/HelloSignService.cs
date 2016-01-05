@@ -98,7 +98,7 @@ namespace RealCrowd.HelloSign
 
             using (var response = await httpClient.GetAsync(url))
             {
-                await request.OnStreamAvailable(new FileResponse
+                await request.OnResponseStreamAvailable(new FileResponse
                 {
                     Stream = await response.Content.ReadAsStreamAsync(),
                     FileName = response.Content.Headers.ContentDisposition.FileName

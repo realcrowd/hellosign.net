@@ -69,7 +69,6 @@
     <Compile Include="Models\IHelloSignRequestWithFiles.cs" />
     <Compile Include="Models\IHelloSignStreamCallbackRequest.cs" />
     <Compile Include="Models\Template.cs" />
-    <Compile Include="MultiPartFormDataContentExtensions.cs" />
     <Compile Include="Services\TemplateService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\EmbeddedService.cs" />
