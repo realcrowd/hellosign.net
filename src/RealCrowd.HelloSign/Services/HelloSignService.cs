@@ -33,7 +33,7 @@ namespace RealCrowd.HelloSign
             httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Basic",
-                    Convert.ToBase64String(GetAsciiBytes(string.Format("{0}:{1}", username, password))));
+                    Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", username, password))));
         }
 
         public async Task<T> MakeRequestAsync<T>(Endpoint endpoint, IHelloSignRequest request = null)
@@ -70,18 +70,6 @@ namespace RealCrowd.HelloSign
                 default:
                     throw new Exception("Method not defined properly for endpoint: " + endpoint.Url);
             }
-        }
-
-        public static byte[] GetAsciiBytes(string s)
-        {
-            var retval = new byte[s.Length];
-            for (int ix = 0; ix < s.Length; ++ix)
-            {
-                char ch = s[ix];
-                if (ch <= 0x7f) retval[ix] = (byte)ch;
-                else retval[ix] = (byte)'?';
-            }
-            return retval;
         }
 
         public async Task MakeStreamCallbackRequestAsync(Endpoint endpoint, IHelloSignStreamCallbackRequest request)
