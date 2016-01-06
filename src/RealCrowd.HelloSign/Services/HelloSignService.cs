@@ -137,7 +137,7 @@ namespace RealCrowd.HelloSign
                 fsContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
                 {
                     Name = "\"" + fileRequestEntry.Key + "\"",
-                    FileName = "\"" + fileRequestEntry.Value.FileName + "\""
+                    FileName = Uri.EscapeDataString(fileRequestEntry.Value.FileName)
                 };
                 fsContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 content.Add(fsContent);
@@ -224,18 +224,15 @@ namespace RealCrowd.HelloSign
             if (!string.IsNullOrEmpty(query))
                 url += "?" + query;
 
-            using (var response = await httpClient.GetAsync(url))
-            using (var stream = await response.Content.ReadAsStreamAsync())
-            {
-                var target = new MemoryStream();
-                await stream.CopyToAsync(target, 4096);
+            
+            var response = await httpClient.GetAsync(url);
+            var stream = await response.Content.ReadAsStreamAsync();
 
-                return new FileResponse()
-                {
-                    Stream = target,
-                    FileName = response.Content.Headers.ContentDisposition.FileName
-                };
-            }
+            return new FileResponse()
+            {
+                Stream = stream,
+                FileName = response.Content.Headers.ContentDisposition.FileName
+            };
         }
     }
 }
