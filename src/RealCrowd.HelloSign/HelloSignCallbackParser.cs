@@ -16,6 +16,8 @@ namespace RealCrowd.HelloSign
     {
         internal string ApiKey { get; set; }
 
+        
+
         public async Task<HelloSignCallback> ParseAsync(HttpRequestMessage request)
         {
             var p = new InMemoryMultipartFormDataStreamProvider();
@@ -30,7 +32,7 @@ namespace RealCrowd.HelloSign
                 var hmac = new System.Security.Cryptography.HMACSHA256(keyBytes);
                 var inputBytes = Encoding.ASCII.GetBytes(cb.Event.EventTime + cb.Event.EventType);
                 var outputBytes = hmac.ComputeHash(inputBytes);
-                var hash = BitConverter.ToString(outputBytes).Replace("-", "").ToLower();
+                var hash = HelloSignUtilities.GenerateEventHash(ApiKey, cb.Event.EventTime, cb.Event.EventType);
 
                 if (string.IsNullOrEmpty(hash))
                 {

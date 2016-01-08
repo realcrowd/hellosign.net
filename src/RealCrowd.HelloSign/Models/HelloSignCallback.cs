@@ -84,6 +84,7 @@ namespace RealCrowd.HelloSign.Models
         [JsonProperty("event_metadata")]
         public HelloSignCallbackEventMetadata EventMetadata { get; set; }
         [JsonProperty("account_guid")]
+        [Obsolete("Use EventMetadata.ReportedForAccountId")]
         public string AccountGuid { get; set; }
     }
 
@@ -91,5 +92,9 @@ namespace RealCrowd.HelloSign.Models
     {
         [JsonProperty("reported_for_account_id")]
         public string ReportedForAccountId { get; set; }
+        [JsonProperty("related_signature_id")]
+        public string RelatedSignatureId { get; set; }
+        [JsonProperty("reported_for_app_id")]
+        public string ReportedForAppId { get; set; }
     }
 }
