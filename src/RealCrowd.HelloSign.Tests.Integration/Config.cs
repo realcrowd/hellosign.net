@@ -16,7 +16,6 @@ namespace RealCrowd.HelloSign.Tests.Integration
         public static string ClientId { get { return Environment.GetEnvironmentVariable("HELLOSIGN_CLIENT_ID", EnvironmentVariableTarget.User); } }
         public static string TemplateId1 { get { return Environment.GetEnvironmentVariable("HELLOSIGN_TEMPLATE_ID_1", EnvironmentVariableTarget.User); } }
         public static string ReuseableFormId { get { return Environment.GetEnvironmentVariable("HELLOSIGN_REUSEABLE_FORM_ID", EnvironmentVariableTarget.User); } }
-        //public static string TemplateId2 { get { return Environment.GetEnvironmentVariable("HELLOSIGN_TEMPLATE_ID_2", EnvironmentVariableTarget.User); } }
         /// <summary>
         /// Id for a Template that has a single signer role
         /// </summary>
@@ -32,5 +31,6 @@ namespace RealCrowd.HelloSign.Tests.Integration
         public static string CompletedSignatureRequestId { get { return Environment.GetEnvironmentVariable("HELLOSIGN_COMPLETED_SIGNATURE_REQUEST_ID", EnvironmentVariableTarget.User); } }
         public static string TestEmail1 { get { return Environment.GetEnvironmentVariable("HELLOSIGN_TEST_EMAIL_1", EnvironmentVariableTarget.User); } }
         public static string TestEmail2 { get { return Environment.GetEnvironmentVariable("HELLOSIGN_TEST_EMAIL_2", EnvironmentVariableTarget.User); } }
+        public static string TestCallbackUrl { get { return Environment.GetEnvironmentVariable("HELLOSIGN_TEST_CALLBACK_URL", EnvironmentVariableTarget.User); } }
     }
 }

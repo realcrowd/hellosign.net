@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelloSignCallbackParser.cs" />
     <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\CustomField.cs" />
     <Compile Include="Models\Embedded.cs" />
