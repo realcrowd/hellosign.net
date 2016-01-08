@@ -3,20 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace RealCrowd.HelloSign
 {
     internal class HelloSignCallbackParser
     {
         internal string ApiKey { get; set; }
-
-        
 
         public async Task<HelloSignCallback> ParseAsync(HttpRequestMessage request)
         {
