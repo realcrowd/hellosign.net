@@ -71,7 +71,7 @@ namespace RealCrowd.HelloSign.Models
         [JsonProperty("name")]
         public string Name { get; internal set; }
         [JsonProperty("value")]
-        public string Value { get; internal set; }
+        public object Value { get; internal set; }
         [JsonProperty("type")]
         public string Type { get; internal set; }
     }
