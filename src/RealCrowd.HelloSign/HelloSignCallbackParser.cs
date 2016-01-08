@@ -28,10 +28,6 @@ namespace RealCrowd.HelloSign
             // only validate the hash if the ApiKey has been set
             if (string.IsNullOrEmpty(ApiKey))
             {
-                var keyBytes = Encoding.ASCII.GetBytes(ApiKey);
-                var hmac = new System.Security.Cryptography.HMACSHA256(keyBytes);
-                var inputBytes = Encoding.ASCII.GetBytes(cb.Event.EventTime + cb.Event.EventType);
-                var outputBytes = hmac.ComputeHash(inputBytes);
                 var hash = HelloSignUtilities.GenerateEventHash(ApiKey, cb.Event.EventTime, cb.Event.EventType);
 
                 if (string.IsNullOrEmpty(hash))
