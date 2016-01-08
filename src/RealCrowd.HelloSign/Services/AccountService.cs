@@ -51,5 +51,18 @@ namespace RealCrowd.HelloSign.Clients
                 request);
             return accountWrapper.Account;
         }
+
+        public Task<Account> VerifyAsync(string emailAddress)
+        {
+            return VerifyAsync(new AccountVerifyRequest { EmailAddress = emailAddress });
+        }
+
+        public async Task<Account> VerifyAsync(AccountVerifyRequest request)
+        {
+            AccountWrapper accountWrapper = await helloSignService.MakeRequestAsync<AccountWrapper>(
+                settings.HelloSignSettings.Endpoints.Account.Verify,
+                request);
+            return accountWrapper.Account;
+        }
     }
 }

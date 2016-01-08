@@ -11,5 +11,7 @@ namespace RealCrowd.HelloSign.Clients
     {
         Task<Embedded> GetSignUrlAsync(string signatureId);
         Task<Embedded> GetSignUrlAsync(EmbeddedGetSignUrlRequest request);
+        Task<Embedded> GetEditUrlAsync(string templateId, bool skipSignerRoles = false, bool skipSubjectAndMessage = false);
+        Task<Embedded> GetEditUrlAsync(EmbeddedGetEditUrlRequest request);
     }
 }

@@ -7,6 +7,7 @@ namespace RealCrowd.HelloSign.Clients
 {
     public interface ITemplateService
     {
+        Task<Template> GetAsync(string templateId);
         Task<Template> GetAsync(TemplateRequest request);
         Task<TemplateListResponse> GetListAsync(TemplateListRequest request);
     }

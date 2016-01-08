@@ -30,5 +30,22 @@ namespace RealCrowd.HelloSign.Clients
                 request);
             return wrapper.Embedded;
         }
+
+        public Task<Embedded> GetEditUrlAsync(string templateId, bool skipSignerRoles = false, bool skipSubjectAndMessage = false)
+        {
+            return GetEditUrlAsync(new EmbeddedGetEditUrlRequest {
+                TemplateId = templateId,
+                SkipSignerRoles = skipSignerRoles,
+                SkipSubjectAndMessage = skipSubjectAndMessage
+            });
+        }
+
+        public async Task<Embedded> GetEditUrlAsync(EmbeddedGetEditUrlRequest request)
+        {
+            EmbeddedWrapper wrapper = await helloSignService.MakeRequestAsync<EmbeddedWrapper>(
+                settings.HelloSignSettings.Endpoints.Embedded.GetTemplateEditUrl,
+                request);
+            return wrapper.Embedded;
+        }
     }
 }

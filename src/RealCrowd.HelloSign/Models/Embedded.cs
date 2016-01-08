@@ -34,4 +34,21 @@ namespace RealCrowd.HelloSign.Models
             };
         }
     }
+
+    public class EmbeddedGetEditUrlRequest : IHelloSignRequest
+    {
+        public string TemplateId { get; set; }
+        public bool SkipSignerRoles { get; set; }
+        public bool SkipSubjectAndMessage { get; set; }
+
+        public IDictionary<string, object> ToRequestParams()
+        {
+            return new Dictionary<string, object>()
+            {
+                { "template_id", TemplateId },
+                { "skip_signer_roles", SkipSignerRoles },
+                { "skip_subject_message", SkipSubjectAndMessage }
+            };
+        }
+    }
 }

@@ -26,6 +26,15 @@ namespace RealCrowd.HelloSign.Models
 
         [JsonProperty("documents")]
         public IList<Document> Documents { get; internal set; }
+
+        [JsonProperty("accounts")]
+        public IList<AccountCondensed> Accounts { get; internal set; }
+
+        [JsonProperty("is_creator")]
+        public bool IsCreator { get; internal set; }
+
+        [JsonProperty("can_edit")]
+        public bool CanEdit { get; internal set; }
     }
 
     public class TemplateListRequest : IHelloSignRequest
@@ -71,5 +80,51 @@ namespace RealCrowd.HelloSign.Models
     {
         [JsonProperty("template")]
         public Template Template { get; internal set; }
+    }
+
+    public class SignerRole
+    {
+        [JsonProperty("name")]
+        public string Name { get; internal set; }
+        [JsonProperty("order")]
+        public int? Order { get; internal set; }
+    }
+
+    public class CcRole
+    {
+        [JsonProperty("name")]
+        public string Name { get; internal set; }
+    }
+
+    public class Document
+    {
+        [JsonProperty("name")]
+        public string Name { get; internal set; }
+        [JsonProperty("index")]
+        public int Index { get; internal set; }
+        [JsonProperty("form_fields")]
+        public IList<FormField> FormFields { get; internal set; }
+        [JsonProperty("custom_fields")]
+        public IList<CustomFieldTemplate> CustomFields { get; internal set; }
+    }
+
+    public class FormField
+    {
+        [JsonProperty("api_id")]
+        public string ApiId { get; internal set; }
+        [JsonProperty("name")]
+        public string Name { get; internal set; }
+        [JsonProperty("type")]
+        public string Type { get; internal set; }
+        [JsonProperty("x")]
+        public double X { get; internal set; }
+        [JsonProperty("y")]
+        public double Y { get; internal set; }
+        [JsonProperty("width")]
+        public int Width { get; internal set; }
+        [JsonProperty("height")]
+        public int Height { get; internal set; }
+        [JsonProperty("required")]
+        public bool Required { get; internal set; }
     }
 }

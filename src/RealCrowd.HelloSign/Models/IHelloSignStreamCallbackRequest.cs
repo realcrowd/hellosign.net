@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign.Models
 {
-    public interface IHelloSignStreamRequest : IHelloSignRequest
+    public interface IHelloSignStreamCallbackRequest : IHelloSignRequest
     {
-        Func<Stream, Task> OnStreamAvailable { get; set; }
+        Func<FileResponse, Task> OnResponseStreamAvailable { get; set; }
     }
 }

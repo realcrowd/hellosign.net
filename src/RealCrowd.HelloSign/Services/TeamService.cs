@@ -56,7 +56,7 @@ namespace RealCrowd.HelloSign.Clients
         public async Task<bool> DestroyAsync()
         {
             dynamic response = await helloSignService.MakeRequestAsync<dynamic>(
-                settings.HelloSignSettings.Endpoints.Team.Destory);
+                settings.HelloSignSettings.Endpoints.Team.Delete);
             return response != null;
         }
 

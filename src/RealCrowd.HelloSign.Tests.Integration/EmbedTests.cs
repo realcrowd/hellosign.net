@@ -17,7 +17,14 @@ namespace RealCrowd.HelloSign.Tests.Integration
         [TestInitialize]
         public void Init()
         {
-            client = new HelloSignClient(Config.Username, Config.Password);
+            if (!string.IsNullOrEmpty(Config.ApiKey))
+            {
+                client = new HelloSignClient(Config.ApiKey);
+            }
+            else
+            {
+                client = new HelloSignClient(Config.Username, Config.Password);
+            }
         }
 
         [TestMethod]
@@ -31,23 +38,31 @@ namespace RealCrowd.HelloSign.Tests.Integration
                 Subject = "test subject",
                 Message = "test message",
                 ClientId = Config.ClientId,
-                Signers = new Dictionary<string, SignatureRequestSignerRequest>()
+                Signers = new Dictionary<string, SignatureRequestSignerRoleRequest>()
                 {
                     {
-                        "Investor",
-                        new SignatureRequestSignerRequest
+                        "TestRole1",
+                        new SignatureRequestSignerRoleRequest
                         {
                             EmailAddress = "test@test.com",
                             Name = "Test Test",
                         }
+                    },
+                    {
+                        "TestRole2",
+                        new SignatureRequestSignerRoleRequest
+                        {
+                            EmailAddress = "test2@test.com",
+                            Name = "Test Test",
+                        }
                     }
                 },
-                CustomFields = new Dictionary<string, string>{{"InvestorName","Bob"}}
+                CustomFields = new Dictionary<string, string>{{ "TestCustomSendingField1", "Bob"}}
             };
-            var signatureResponse = await client.SignatureRequest.CreateEmbeddedWithTemplateAsync(embeddedSignRequest);
+            var signatureResponse = await client.SignatureRequest.SendEmbeddedWithTemplateAsync(embeddedSignRequest);
             
             Assert.AreEqual(signatureResponse.Title,embeddedSignRequest.Title);
-            Assert.AreEqual(signatureResponse.Signatures.Count, 1);
+            Assert.AreEqual(signatureResponse.Signatures.Count, 2);
 
             var signatureUrlResponse =
                 await client.Embedded.GetSignUrlAsync(signatureResponse.Signatures.First().SignatureId);

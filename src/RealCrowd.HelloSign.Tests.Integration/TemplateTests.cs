@@ -17,7 +17,14 @@ namespace RealCrowd.HelloSign.Tests.Integration
         [TestInitialize]
         public void Init()
         {
-            client = new HelloSignClient(Config.Username, Config.Password);
+            if (!string.IsNullOrEmpty(Config.ApiKey))
+            {
+                client = new HelloSignClient(Config.ApiKey);
+            }
+            else
+            {
+                client = new HelloSignClient(Config.Username, Config.Password);
+            }
         }
 
         [TestMethod]
@@ -30,8 +37,8 @@ namespace RealCrowd.HelloSign.Tests.Integration
         [TestMethod]
         public async Task GetTemplate()
         {
-            Template template = await client.Template.GetAsync(new TemplateRequest(){TemplateId = Config.TemplateId1});
-            Assert.AreEqual(Config.TemplateId1,template.TemplateId);
+            Template template = await client.Template.GetAsync(new TemplateRequest(){TemplateId = Config.SimpleUnorderedTemplateId});
+            Assert.AreEqual(Config.SimpleUnorderedTemplateId,template.TemplateId);
         }
     }
 }

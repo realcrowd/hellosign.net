@@ -1,16 +1,23 @@
 ﻿// Copyright (c) RealCrowd, Inc. All rights reserved. See LICENSE in the project root for license information.
 using RealCrowd.HelloSign.Clients;
 using Ninject;
+using RealCrowd.HelloSign.Models;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign
 {
     public class HelloSignClient
     {
         private IKernel kernel;
+        private HelloSignCallbackParser callbackParser = new HelloSignCallbackParser();
+        
 
         public HelloSignClient(string apiKey)
             : this(apiKey, string.Empty)
-        { }
+        {
+            callbackParser.ApiKey = apiKey;
+        }
 
         public HelloSignClient(string username, string password)
         {
@@ -142,6 +149,11 @@ namespace RealCrowd.HelloSign
                     embedded = kernel.Get<IEmbeddedService>();
                 return embedded;
             }
+        }
+
+        public Task<HelloSignCallback> ParseCallbackAsync(HttpRequestMessage request)
+        {
+            return callbackParser.ParseAsync(request);
         }
     }
 }

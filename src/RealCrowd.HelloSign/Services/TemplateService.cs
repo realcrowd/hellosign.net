@@ -2,6 +2,7 @@
 
 using RealCrowd.HelloSign.Models;
 using System.Threading.Tasks;
+using System;
 
 namespace RealCrowd.HelloSign.Clients
 {
@@ -15,7 +16,15 @@ namespace RealCrowd.HelloSign.Clients
             this.settings = settings;
             this.helloSignService = helloSignService;
         }
-        
+
+        public Task<Template> GetAsync(string templateId)
+        {
+            return GetAsync(new TemplateRequest
+            {
+                TemplateId = templateId
+            });
+        }
+
         public async Task<Template> GetAsync(TemplateRequest request)
         {
             TemplateResponse templateResponse = await helloSignService.MakeRequestAsync<TemplateResponse>(

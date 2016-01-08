@@ -16,5 +16,7 @@ namespace RealCrowd.HelloSign.Clients
         Task<Account> UpdateAsync(AccountUpdateRequest request);
         Task<Account> CreateAsync(string emailAddress, string password);
         Task<Account> CreateAsync(AccountCreateRequest request);
+        Task<Account> VerifyAsync(AccountVerifyRequest request);
+        Task<Account> VerifyAsync(string emailAddress);
     }
 }
