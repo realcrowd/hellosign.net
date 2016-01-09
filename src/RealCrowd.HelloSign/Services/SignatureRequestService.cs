@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.IO;
+using System.Net.Http;
 
 namespace RealCrowd.HelloSign.Clients
 {
@@ -109,7 +110,27 @@ namespace RealCrowd.HelloSign.Clients
                 request);
         }
 
-        public Task<FileResponse> GetFilesAsync(string signatureRequestId, string fileType)
+        public Task<HttpResponseMessage> GetFilesHttpResponseAsync(string signatureRequestId, string fileType = "")
+        {
+            return helloSignService.MakeRawRequestAsync(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.GetFiles, new SignatureRequestGetFilesRequest
+                {
+                    SignatureRequestId = signatureRequestId,
+                    FileType = fileType
+                });
+        }
+
+        public async Task<Stream> GetFilesAsStreamAsync(string signatureRequestId, string fileType = "")
+        {
+            return await (await helloSignService.MakeRawRequestAsync(
+                settings.HelloSignSettings.Endpoints.SignatureRequest.GetFiles, new SignatureRequestGetFilesRequest
+                {
+                    SignatureRequestId = signatureRequestId,
+                    FileType = fileType
+                })).Content.ReadAsStreamAsync();
+        }
+
+        public Task<FileResponse> GetFilesAsync(string signatureRequestId, string fileType = "")
         {
             return GetFilesAsync(new SignatureRequestGetFilesRequest
             {

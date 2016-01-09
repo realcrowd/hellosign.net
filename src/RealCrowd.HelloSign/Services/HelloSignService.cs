@@ -214,6 +214,18 @@ namespace RealCrowd.HelloSign
 
         public async Task<FileResponse> MakeStreamRequestAsync(Endpoint endpoint, IHelloSignRequest request)
         {
+            var response = await MakeRawRequestAsync(endpoint, request);
+            var stream = await response.Content.ReadAsStreamAsync();
+
+            return new FileResponse()
+            {
+                Stream = stream,
+                FileName = response.Content.Headers.ContentDisposition.FileName
+            };
+        }
+
+        public Task<HttpResponseMessage> MakeRawRequestAsync(Endpoint endpoint, IHelloSignRequest request)
+        {
             var endpointUrlAndParams = BuildEndpointUrlAndParams(endpoint, request);
             string endpointUrl = endpointUrlAndParams.Item1;
             var encodedData = endpointUrlAndParams.Item2;
@@ -224,15 +236,7 @@ namespace RealCrowd.HelloSign
             if (!string.IsNullOrEmpty(query))
                 url += "?" + query;
 
-            
-            var response = await httpClient.GetAsync(url);
-            var stream = await response.Content.ReadAsStreamAsync();
-
-            return new FileResponse()
-            {
-                Stream = stream,
-                FileName = response.Content.Headers.ContentDisposition.FileName
-            };
+            return httpClient.GetAsync(url);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,5 +18,6 @@ namespace RealCrowd.HelloSign
         Task<T> MakeRequestWithFilesAsync<T>(Endpoint endpoint, IHelloSignRequestWithFiles requestWithFiles);
         Task MakeStreamCallbackRequestAsync(Endpoint endpoint, IHelloSignStreamCallbackRequest request);
         Task<FileResponse> MakeStreamRequestAsync(Endpoint endpoint, IHelloSignRequest request);
+        Task<HttpResponseMessage> MakeRawRequestAsync(Endpoint endpoint, IHelloSignRequest request);
     }
 }

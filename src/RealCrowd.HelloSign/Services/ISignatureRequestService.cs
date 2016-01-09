@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -76,8 +77,10 @@ namespace RealCrowd.HelloSign.Clients
         Task<bool> CancelAsync(SignatureRequestCancelRequest request);
         Task GetFilesAsync(string signatureRequestId, string fileType, Func<FileResponse, Task> onStreamAvailable);
         Task GetFilesAsync(SignatureRequestGetFilesCallbackRequest request);
-        Task<FileResponse> GetFilesAsync(string signatureRequestId, string fileType);
+        Task<FileResponse> GetFilesAsync(string signatureRequestId, string fileType = FileTypes.Pdf);
         Task<FileResponse> GetFilesAsync(SignatureRequestGetFilesRequest request);
+        Task<HttpResponseMessage> GetFilesHttpResponseAsync(string signatureRequestId, string fileType = FileTypes.Pdf);
+        Task<Stream> GetFilesAsStreamAsync(string signatureRequestId, string fileType = FileTypes.Pdf);
 
         Task<List<SignatureRequest>> SendEmbeddedAsync(SignatureRequestSendRequest request);
         Task<SignatureRequest> SendEmbeddedWithTemplateAsync(EmbeddedSignatureFromTemplateRequest request);

@@ -920,6 +920,47 @@ running this test since there is not way to mimic this in code.");
         }
 
         [TestMethod]
+        public async Task GetSignatureRequestFilesResponseTest()
+        {
+            using (var response = await client.SignatureRequest.GetFilesHttpResponseAsync(Config.CompletedSignatureRequestId))
+            {
+
+                Assert.IsNotNull(response);
+                Assert.AreNotEqual(string.Empty, response.Content.Headers.ContentDisposition.FileName);
+
+                var responseStream = await response.Content.ReadAsStreamAsync();
+
+                var fileName = Path.GetTempFileName();
+
+                using (var fileStream = File.Create(fileName))
+                {
+                    responseStream.Seek(0, SeekOrigin.Begin);
+                    responseStream.CopyTo(fileStream);
+                }
+
+                File.Delete(fileName);
+            }
+        }
+
+        [TestMethod]
+        public async Task GetSignatureRequestFilesStreamTest()
+        {
+            using (var responseStream = await client.SignatureRequest.GetFilesAsStreamAsync(Config.CompletedSignatureRequestId))
+            {
+
+                var fileName = Path.GetTempFileName();
+
+                using (var fileStream = File.Create(fileName))
+                {
+                    responseStream.Seek(0, SeekOrigin.Begin);
+                    responseStream.CopyTo(fileStream);
+                }
+
+                File.Delete(fileName);
+            }
+        }
+
+        [TestMethod]
         public async Task FinalCopySignatureRequestTest()
         {
             string signatureRequestId = Config.CompletedSignatureRequestId;
