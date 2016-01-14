@@ -1,13 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign.Models
 {
+    [Serializable]
     public class HelloSignCallback
     {
         public JObject JsonPayload { get; set; }
@@ -73,6 +70,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class HelloSignCallbackEvent
     {
         [JsonProperty("event_time")]
@@ -88,6 +86,7 @@ namespace RealCrowd.HelloSign.Models
         public string AccountGuid { get; set; }
     }
 
+    [Serializable]
     public class HelloSignCallbackEventMetadata
     {
         [JsonProperty("reported_for_account_id")]

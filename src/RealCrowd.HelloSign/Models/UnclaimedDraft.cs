@@ -3,9 +3,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign.Models
 {
@@ -15,6 +12,7 @@ namespace RealCrowd.HelloSign.Models
         public UnclaimedDraft UnclaimedDraft { get; internal set; }
     }
 
+    [Serializable]
     public class UnclaimedDraft
     {
         [JsonProperty("claim_url")]
@@ -27,6 +25,7 @@ namespace RealCrowd.HelloSign.Models
         public string TestMode { get; internal set; }
     }
 
+    [Serializable]
     public class UnclaimedDraftCreateRequest : IHelloSignRequest
     {
         public int? TestMode { get; set; }

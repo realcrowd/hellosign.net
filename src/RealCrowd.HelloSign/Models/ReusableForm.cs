@@ -98,6 +98,7 @@ namespace RealCrowd.HelloSign.Models
     }
 
     [Obsolete]
+    [Serializable]
     public class ReusableFormRemoveUserRequest : IHelloSignRequest
     {
         public string ReusableFormId { get; set; }

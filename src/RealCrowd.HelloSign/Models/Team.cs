@@ -3,9 +3,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign.Models
 {
@@ -15,6 +12,7 @@ namespace RealCrowd.HelloSign.Models
         public Team Team { get; internal set; }
     }
 
+    [Serializable]
     public class Team
     {
         [JsonProperty("name")]
@@ -25,6 +23,7 @@ namespace RealCrowd.HelloSign.Models
         public IList<AccountCondensed> InvitedAccounts { get; internal set; }
     }
 
+    [Serializable]
     public class TeamCreateRequest : IHelloSignRequest
     {
         public string Name { get; set; }
@@ -38,6 +37,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class TeamUpdateRequest : IHelloSignRequest
     {
         public string Name { get; set; }
@@ -51,6 +51,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class TeamAddMemberRequest : IHelloSignRequest
     {
         public string AccountId { get; set; }
@@ -67,6 +68,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class TeamRemoveMemberRequest : IHelloSignRequest
     {
         public string AccountId { get; set; }

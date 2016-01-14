@@ -1,9 +1,11 @@
 ﻿// Copyright (c) RealCrowd, Inc. All rights reserved. See LICENSE in the project root for license information.
 
 using Newtonsoft.Json;
+using System;
 
 namespace RealCrowd.HelloSign.Models
 {
+    [Serializable]
     public class CustomFieldTemplate
     {
         [JsonProperty("name")]

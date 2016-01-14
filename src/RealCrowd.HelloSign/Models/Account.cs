@@ -3,9 +3,6 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign.Models
 {
@@ -15,6 +12,7 @@ namespace RealCrowd.HelloSign.Models
         public Account Account { get; set; }
     }
 
+    [Serializable]
     public class Account : AccountCondensedWithRole
     {
         /// <summary>
@@ -42,6 +40,7 @@ namespace RealCrowd.HelloSign.Models
         public AccountQuotas Quotas { get; internal set; }
     }
 
+    [Serializable]
     public class AccountCondensedWithRole : AccountCondensed
     {
         /// <summary>
@@ -51,6 +50,7 @@ namespace RealCrowd.HelloSign.Models
         public string RoleCode { get; internal set; }
     }
 
+    [Serializable]
     public class AccountCondensed
     {
         /// <summary>
@@ -65,6 +65,7 @@ namespace RealCrowd.HelloSign.Models
         public string EmailAddress { get; internal set; }
     }
 
+    [Serializable]
     public class AccountQuotas
     {
         /// <summary>
@@ -84,6 +85,7 @@ namespace RealCrowd.HelloSign.Models
         public int? DocumentsLeft { get; internal set; }
     }
 
+    [Serializable]
     public class AccountUpdateRequest : IHelloSignRequest
     {
         public string CallbackUrl { get; set; }
@@ -97,6 +99,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class AccountCreateRequest : IHelloSignRequest
     {
         public string EmailAddress { get; set; }
@@ -112,6 +115,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class AccountVerifyRequest : IHelloSignRequest
     {
         public string EmailAddress { get; set; }

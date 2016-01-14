@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace RealCrowd.HelloSign.Models
 {
+    [Serializable]
     public class ListInfo
     {
         /// <summary>

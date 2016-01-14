@@ -13,6 +13,7 @@ namespace RealCrowd.HelloSign.Models
         public Embedded Embedded { get; internal set; }
     }
 
+    [Serializable]
     public class Embedded
     {
         [JsonProperty("sign_url")]
@@ -22,6 +23,7 @@ namespace RealCrowd.HelloSign.Models
         public long ExpiresAt { get; internal set; }
     }
 
+    [Serializable]
     public class EmbeddedGetSignUrlRequest : IHelloSignRequest
     {
         public string SignatureId { get; set; }
@@ -35,6 +37,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class EmbeddedGetEditUrlRequest : IHelloSignRequest
     {
         public string TemplateId { get; set; }

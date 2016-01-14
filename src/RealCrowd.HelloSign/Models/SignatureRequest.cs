@@ -18,6 +18,7 @@ namespace RealCrowd.HelloSign.Models
         public SignatureRequest SignatureRequest { get; set; }
     }
 
+    [Serializable]
     public class SignatureRequest
     {
         [JsonProperty("test_mode")]
@@ -62,6 +63,7 @@ namespace RealCrowd.HelloSign.Models
         public IDictionary<string, string> Metadata { get; set; }
     }
 
+    [Serializable]
     public class ResponseData
     {
         [JsonProperty("api_id")]
@@ -76,6 +78,7 @@ namespace RealCrowd.HelloSign.Models
         public string Type { get; internal set; }
     }
 
+    [Serializable]
     public class Signature
     {
         [JsonProperty("signature_id")]
@@ -98,6 +101,7 @@ namespace RealCrowd.HelloSign.Models
         public bool HasPin { get; internal set; }
     }
 
+    [Serializable]
     public class SignatureRequestList
     {
         [JsonProperty("list_info")]
@@ -106,6 +110,7 @@ namespace RealCrowd.HelloSign.Models
         public IList<SignatureRequest> SignatureRequests { get; internal set; }
     }
 
+    [Serializable]
     public class SignatureRequestGetRequest : HelloSignRequestBase
     {
         /// <summary>
@@ -115,6 +120,7 @@ namespace RealCrowd.HelloSign.Models
         public string SignatureRequestId { get; set; }
     }
 
+    [Serializable]
     public abstract class HelloSignRequestBase : IHelloSignRequest
     {
         public virtual IDictionary<string, object> ToRequestParams()
@@ -123,6 +129,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class SignatureRequestListRequest : IHelloSignRequest
     {
         public int? Page { get; set; }
@@ -143,6 +150,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class SignatureRequestSendRequest : IHelloSignRequestWithFiles
     {
         public SignatureRequestSendRequest()
@@ -259,6 +267,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class MultiFileRequest
     {
         private List<FileRequest> requests = new List<FileRequest>();
@@ -295,6 +304,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class FileRequest
     {
         private Func<Task<Stream>> getStreamAsync;
@@ -368,6 +378,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class SignerRequest
     {
         /// <summary>
@@ -388,6 +399,7 @@ namespace RealCrowd.HelloSign.Models
         public string Pin { get; set; }
     }
 
+    [Serializable]
     public class FormFieldsRequest
     {
         /// <summary>
@@ -444,6 +456,7 @@ namespace RealCrowd.HelloSign.Models
         public string ValidationType { get; set; }
     }
 
+    [Serializable]
     public class SignatureRequestSendReusableFormRequest : IHelloSignRequest
     {
         public int? TestMode { get; set; }
@@ -499,6 +512,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class SignatureRequestFromTemplateRequest : IHelloSignRequest
     {
         /// <summary>
@@ -596,6 +610,8 @@ namespace RealCrowd.HelloSign.Models
             return data;
         }
     }
+
+    [Serializable]
     public class EmbeddedSignatureFromTemplateRequest : IHelloSignRequest
     {
         public int? TestMode { get; set; }
@@ -655,6 +671,8 @@ namespace RealCrowd.HelloSign.Models
             return data;
         }
     }
+
+    [Serializable]
     public class SignatureRequestSignerRoleRequest
     {
         /// <summary>
@@ -671,11 +689,13 @@ namespace RealCrowd.HelloSign.Models
         public string Pin { get; set; }
     }
 
+    [Serializable]
     public class SignatureRequestSendReusableFormCcRequest
     {
         public string EmailAddress { get; set; }
     }
 
+    [Serializable]
     public class SignatureRequestRemindRequest : IHelloSignRequest
     {
         public string SignatureRequestId { get; set; }
@@ -691,6 +711,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class SignatureRequestCancelRequest : IHelloSignRequest
     {
         public string SignatureRequestId { get; set; }
@@ -705,6 +726,7 @@ namespace RealCrowd.HelloSign.Models
     }
 
     [Obsolete]
+    [Serializable]
     public class SignatureRequestFinalCopyRequest : IHelloSignStreamCallbackRequest
     {
         public string SignatureRequestId { get; set; }
@@ -725,6 +747,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class SignatureRequestGetFilesRequest : IHelloSignRequest
     {
         public string SignatureRequestId { get; set; }
@@ -744,6 +767,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class SignatureRequestGetFilesCallbackRequest : SignatureRequestGetFilesRequest, IHelloSignStreamCallbackRequest
     {
         public Func<FileResponse, Task> OnResponseStreamAvailable { get; set; }

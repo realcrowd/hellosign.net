@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace RealCrowd.HelloSign.Models
 {
+    [Serializable]
     public class Template
     {
         [JsonProperty("template_id")]
@@ -37,6 +35,7 @@ namespace RealCrowd.HelloSign.Models
         public bool CanEdit { get; internal set; }
     }
 
+    [Serializable]
     public class TemplateListRequest : IHelloSignRequest
     {
         [JsonProperty("page")]
@@ -53,6 +52,7 @@ namespace RealCrowd.HelloSign.Models
         }
     }
 
+    [Serializable]
     public class TemplateListResponse
     {
         [JsonProperty("list_info")]
@@ -61,6 +61,8 @@ namespace RealCrowd.HelloSign.Models
         [JsonProperty("templates")]
         public IList<Template> Templates { get; set; } 
     }
+
+    [Serializable]
     public class TemplateRequest : IHelloSignRequest
     {
         [JsonProperty("template_id")]
@@ -76,12 +78,15 @@ namespace RealCrowd.HelloSign.Models
             return data;
         }
     }
+
+    [Serializable]
     public class TemplateResponse
     {
         [JsonProperty("template")]
         public Template Template { get; internal set; }
     }
 
+    [Serializable]
     public class SignerRole
     {
         [JsonProperty("name")]
@@ -90,12 +95,14 @@ namespace RealCrowd.HelloSign.Models
         public int? Order { get; internal set; }
     }
 
+    [Serializable]
     public class CcRole
     {
         [JsonProperty("name")]
         public string Name { get; internal set; }
     }
 
+    [Serializable]
     public class Document
     {
         [JsonProperty("name")]
@@ -108,6 +115,7 @@ namespace RealCrowd.HelloSign.Models
         public IList<CustomFieldTemplate> CustomFields { get; internal set; }
     }
 
+    [Serializable]
     public class FormField
     {
         [JsonProperty("api_id")]
