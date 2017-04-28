@@ -108,7 +108,7 @@ namespace RealCrowd.HelloSign.Models
         [JsonProperty("name")]
         public string Name { get; internal set; }
         [JsonProperty("index")]
-        public int Index { get; internal set; }
+        public int? Index { get; internal set; }
         [JsonProperty("form_fields")]
         public IList<FormField> FormFields { get; internal set; }
         [JsonProperty("custom_fields")]
@@ -129,9 +129,9 @@ namespace RealCrowd.HelloSign.Models
         [JsonProperty("y")]
         public double Y { get; internal set; }
         [JsonProperty("width")]
-        public int Width { get; internal set; }
+        public double Width { get; internal set; }
         [JsonProperty("height")]
-        public int Height { get; internal set; }
+        public double Height { get; internal set; }
         [JsonProperty("required")]
         public bool Required { get; internal set; }
     }
