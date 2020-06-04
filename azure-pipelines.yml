@@ -4,27 +4,24 @@ trigger:
     include:
       - master
       - releases/*
-
 pr:
   autoCancel: true
   branches:
     include:
       - master
-      - develop/update-to-net-standard
 
 resources:
   repositories:
     - repository: common
       type: github
       name: realcrowd/realcrowd-common-dotnet
-      ref: refs/heads/bug/template-fixes # TODO: remove after master updated
       endpoint: 'RealCrowd GitHub' #Service Connection
 
 variables:
   buildConfiguration: "Release"
   restoreBuildProjects: |
     src/RealCrowd.HelloSign/*.csproj
-  packProjects: |
+  packProjects: >-
     src/RealCrowd.HelloSign/*.csproj
   artifactName: "hellosign.net-drop-$(Build.SourceBranchName)-$(Build.BuildId)"
   #pushPackageEnabled: true #Set when manually queuing job to push package to myget
