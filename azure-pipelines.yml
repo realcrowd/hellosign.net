@@ -1,0 +1,58 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - releases/*
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - master
+      - develop/update-to-net-standard
+
+resources:
+  repositories:
+    - repository: common
+      type: github
+      name: realcrowd/realcrowd-common-dotnet
+      ref: refs/heads/bug/template-fixes # TODO: remove after master updated
+      endpoint: 'RealCrowd GitHub' #Service Connection
+
+variables:
+  buildConfiguration: "Release"
+  restoreBuildProjects: |
+    src/RealCrowd.HelloSign/*.csproj
+  packProjects: |
+    src/RealCrowd.HelloSign/*.csproj
+  artifactName: "hellosign.net-drop-$(Build.SourceBranchName)-$(Build.BuildId)"
+  #pushPackageEnabled: true #Set when manually queuing job to push package to myget
+
+stages:
+  - stage: Build
+    jobs:
+      - template: .azure/pipelines/templates/build-dotnet-v2.yml@common
+        parameters:
+          configuration: $(buildConfiguration)
+          restoreBuildProjects: $(restoreBuildProjects)
+          packProjects: $(packProjects)
+
+          afterPackAndPublish:
+            - task: andremarques023.DiagnosticTasks.DiagnosticTasks.AddBuildTag.AddBuildTag@1
+              displayName: 'Add build tag hellosign.net'
+              inputs:
+                tag: hellosign.net
+
+            - publish: $(build.artifactstagingdirectory)
+              artifact: $(artifactName)
+
+  - stage: PushToMyGet
+    displayName: 'Push To MyGet'
+    condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['pushPackageEnabled'], true)))
+    jobs:
+      - template: .azure/pipelines/templates/nuget-push.yml@common
+        parameters:
+          artifact: $(artifactName)
+          publishFeedCredentials: 'myget/realcrowd'
+          publishSymbolsFeedCredentials: 'myget/realcrowd/symbols'
